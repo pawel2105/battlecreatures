@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HangmanLeague</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<% if notice -%>
+    <section class="alert alert-info"><%= notice %></section>
+<% elsif alert -%>
+    <section class="alert alert-block"><%= alert %></section>
+<% end -%>
+
+<%= yield %>
+
+</body>
+</html>
