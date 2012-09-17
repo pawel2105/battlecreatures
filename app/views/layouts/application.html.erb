@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>HangmanLeague</title>
+  <title>Battle creatures</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -9,9 +9,9 @@
 <body>
 
 <% if notice -%>
-    <section class="alert alert-info"><%= notice %></section>
+    <div class="alert alert-info" style="color:#00008b;"><%= notice %></div>
 <% elsif alert -%>
-    <section class="alert alert-block"><%= alert %></section>
+    <div class="alert alert-block" style="color:#8b0000;"><%= alert %></div>
 <% end -%>
 
 <%= yield %>

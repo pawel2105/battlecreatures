@@ -1,24 +1,26 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.1'
+gem 'rails', '~> 3.2.11'
 
-gem 'pg'
+gem 'mysql'
 gem 'newrelic_rpm'
 gem 'thin'
 gem 'cancan'
 gem 'omniauth'
-# gem 'jquery-rails'
+gem 'kaminari'
+gem 'gabba'
+gem 'nokogiri'
 
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
-#  gem 'therubyracer'
   gem 'uglifier', '>= 1.0.3'
 end
 
 group :development, :test do
+  gem 'hirb'
+  gem 'timecop'
   gem 'annotate'
   gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
 group :test do
@@ -29,4 +31,5 @@ group :test do
   gem 'simplecov-rcov', :require => false
   gem 'flog'
   gem "spork-rails"
+  gem 'webmock'
 end

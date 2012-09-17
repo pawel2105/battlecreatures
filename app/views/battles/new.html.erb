@@ -1,0 +1,9 @@
+Before you go into battle, pick your creature. <br /><br />
+
+<%= link_to "Choose a pirate", the_battle_path("pirate"), :id => "pirate_battle" %><br />
+<%= link_to "Choose a vampire", "/battles/vampire", :id => "vampire_battle" %><br />
+<%= link_to "Choose a ninja", "/battles/ninja", :id => "ninja_battle" %><br />
+<%= link_to "Choose a zombie", "/battles/zombie", :id => "zombie_battle" %><br />
+<%= link_to "Choose a robot", "/battles/robot", :id => "robot_battle" %><br /><br />
+
+Not ready for a battle? <%= link_to 'Back out', root_path, id: "lobby" %>

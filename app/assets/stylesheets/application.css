@@ -11,3 +11,8 @@
  *= require_self
  *= require_tree .
 */
+
+body {
+    font-size: 2em;
+    font-family: "Andale Mono";
+}

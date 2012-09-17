@@ -1,4 +1,4 @@
-HangmanLeague::Application.configure do
+BattleCreatures::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -32,6 +32,7 @@ HangmanLeague::Application.configure do
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
+  config.logger = Logger.new(STDOUT)
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
@@ -53,6 +54,8 @@ HangmanLeague::Application.configure do
 
   # Enable threaded mode
   # config.threadsafe!
+  config.threadsafe!
+  config.dependency_loading = true if $rails_rake_task
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)

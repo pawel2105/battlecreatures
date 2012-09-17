@@ -1,0 +1,13 @@
+<h1>Today's top players:</h1>
+
+<ul>
+  <%= content_tag_for(:li, @users) do |user| %>
+    <%= display_user_name(user.name) %>:
+    <%= user.daily_score  %>
+  <% end %>
+</ul>
+
+<br/>
+
+<%= link_to 'home', root_path, id: 'root_page' %> |
+view <%= link_to 'your scores', user_path(current_user), id: 'view_rank' %>

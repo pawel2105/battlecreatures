@@ -1,0 +1,25 @@
+<%= shinka_ad if current_user && current_user.provider == "mxit" %>
+<br /><br />
+<%= Battle.description %> The outcome was:
+
+<br /><br />
+
+<div id="outcome">
+	<% if @battle.outcome == "win" %>
+		<b style="color:green">You have defeated the <%= @battle.opponent %></b>
+	<% elsif @battle.outcome == "draw" %>
+		<b style="color:gray">You have drawn with the <%= @battle.opponent %></b>
+	<% elsif @battle.outcome == "wrong choice" %>
+		<b style="color:red">Your option was not valid</b>
+	<% else %>
+		<b style="color:red">The <%= @battle.opponent %> has beaten you!</b>
+	<% end %>
+</div>
+
+<br />
+Your score has changed by: <%= @battle.score %>
+<br /><br />
+
+<%= link_to 'Fight', new_battle_path, id: "new_battle" %> again |
+<%= link_to 'Leave', root_path, id: "lobby" %> to the lobby |
+view <%= link_to 'View your rank', user_path(current_user), id: 'view_rank' %>

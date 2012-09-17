@@ -1,0 +1,9 @@
+Your rank for the day: <%= @user.weekly_rank.ordinalize %>
+<br/>
+Your score for today: <%= @user.daily_score %>
+<br/><br />
+<%= link_to 'home', root_path, id: 'root_page' %> |
+Top players for <%= link_to 'today', users_path(order: 'top_day'), id: 'view_top_day_users' %>
+
+
+
