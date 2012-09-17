@@ -50,6 +50,11 @@ GEM
     eventmachine (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    factory_girl (4.1.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.1.0)
+      factory_girl (~> 4.1.0)
+      railties (>= 3.0.0)
     ffi (1.1.5)
     flog (2.5.3)
       ruby_parser (~> 2.0)
@@ -161,6 +166,7 @@ DEPENDENCIES
   cancan
   capybara
   database_cleaner
+  factory_girl_rails
   flog
   launchy
   newrelic_rpm
