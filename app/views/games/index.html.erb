@@ -1,7 +1,7 @@
 <ul>
   <%= content_tag_for(:li, @games) do |game| %>
-      <span>Game <%= game.id %></span>
-      <%= link_to 'Show', game, id: dom_id(game, 'show') %>
+      <span><%= game.hangman_text %></span>
+      <%= link_to(game.done? ? 'Show' : 'Continue', game, id: dom_id(game, 'show')) %>
   <% end %>
 </ul>
 

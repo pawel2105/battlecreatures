@@ -1,7 +1,7 @@
 <% if @game.is_won? %>
-You win
+You win!
 <% elsif @game.is_lost? %>
-You lose
+You lose!
 <% else %>
 You have <span><%= @game.attempts_left %></span> attempts left
 <% end %>
