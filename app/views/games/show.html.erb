@@ -1,6 +1,5 @@
-<p>
-  <b>Level:</b>
-  <%= @game.level %>
-</p>
+You have <span><%= @game.attempts_left %></span> attempts left
 
-<%= link_to 'Back', games_path %>
+<br/>
+
+<%= link_to 'Back', games_path, id: "games_index" %>
