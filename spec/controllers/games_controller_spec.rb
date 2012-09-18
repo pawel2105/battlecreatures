@@ -1,22 +1,19 @@
 require 'spec_helper'
 
 describe GamesController do
-  it_behaves_like "a cancan controller" do
-    let(:subject){create(:game)}
-    let(:default_params){{}}
-  end
 
   context "functionality" do
 
     before :each do
+      @current_user = create(:user)
       @ability = Object.new
       @ability.extend(CanCan::Ability)
       @ability.can(:manage, :all)
-      @controller.should_receive(:current_ability).at_least(:once).and_return(@ability)
-      @controller.stub(:current_user).and_return(stub_model(User))
+      controller.should_receive(:current_ability).at_least(:once).and_return(@ability)
+      controller.stub(:current_user).and_return(@current_user)
     end
 
-      describe "GET index" do
+    describe "GET index" do
 
       def do_get_index
         get :index
@@ -63,22 +60,6 @@ describe GamesController do
       end
     end
 
-    describe "GET edit" do
-
-      before(:each) do
-        @game = create(:game)
-      end
-
-      def do_get_edit
-        get :edit, {:id => @game.to_param}
-      end
-
-      it "assigns the requested game as @game" do
-        do_get_edit
-        assigns(:game).should eq(@game)
-      end
-    end
-
     # update the return value of this method accordingly.
     def valid_attributes
       {}
@@ -102,6 +83,7 @@ describe GamesController do
         it "assigns a newly created game as @game" do
           do_create
           assigns(:game).should be_a(Game)
+          assigns(:game).user.should == @current_user
           assigns(:game).should be_persisted
         end
 
@@ -113,82 +95,28 @@ describe GamesController do
 
       describe "with invalid params" do
 
-        it "assigns a newly created but unsaved game as @game" do
+        before :each do
           # Trigger the behavior that occurs when invalid params are submitted
           Game.any_instance.stub(:save).and_return(false)
+        end
+
+        it "assigns a newly created but unsaved game as @game" do
           do_create
           assigns(:game).should be_a_new(Game)
         end
 
-        it "re-renders the 'new' template" do
-          # Trigger the behavior that occurs when invalid params are submitted
-          Game.any_instance.stub(:save).and_return(false)
+        it "redirects to index" do
           do_create
-          response.should render_template("new")
+          response.should redirect_to(Game)
         end
+
+        it "sets an alert message" do
+          do_create
+          flash[:alert].should_not be_blank
+        end
+
       end
     end
 
-    describe "PUT update" do
-
-      before :each do
-        @game = create(:game)
-      end
-
-      def do_update
-        put :update, :id => @game.to_param, :game => valid_attributes
-      end
-
-      describe "with valid params" do
-        it "updates the requested game" do
-          Game.any_instance.should_receive(:update_attributes).with(valid_attributes)
-          do_update
-        end
-
-        it "assigns the requested game as @game" do
-          do_update
-          assigns(:game).should eq(@game)
-        end
-
-        it "redirects to the game" do
-          do_update
-          response.should redirect_to(@game)
-        end
-      end
-
-      describe "with invalid params" do
-        it "assigns the game as @game" do
-          # Trigger the behavior that occurs when invalid params are submitted
-          Game.any_instance.stub(:save).and_return(false)
-          do_update
-          assigns(:game).should eq(@game)
-        end
-
-        it "re-renders the 'edit' template" do
-          # Trigger the behavior that occurs when invalid params are submitted
-          Game.any_instance.stub(:save).and_return(false)
-          do_update
-          response.should render_template("edit")
-        end
-      end
-    end
-
-    describe "DELETE destroy" do
-
-      before :each do
-        @game = create(:game)
-      end
-
-      it "destroys the requested game" do
-        expect {
-          delete :destroy, {:id => @game.to_param}
-        }.to change(Game, :count).by(-1)
-      end
-
-      it "redirects to the games list" do
-        delete :destroy, {:id => @game.to_param}
-        response.should redirect_to(games_path)
-      end
-    end
   end
 end

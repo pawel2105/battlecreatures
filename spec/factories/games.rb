@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :game do
-    word "MyString"
+    word "better"
     choices "MyText"
     user
   end

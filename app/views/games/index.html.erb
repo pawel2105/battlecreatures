@@ -1,24 +1,15 @@
-
-  <ul>
+<ul>
   <%= content_tag_for(:li, @games) do |game| %>
-      <%= game.level %>
-      <%= link_to 'Show', game, id: dom_id(game,'show') %>
-
-    <%= link_to edit_game_path(game),
-              id: dom_id(game,'edit') do %>
-    <%= bootstrap_icon('icon-pencil') %>
-    <% end %>
-    <%= link_to game, method: :delete, data: { confirm: 'Are you sure?', ok: "Delete" },
-              id: dom_id(game,'delete') do %>
-    <%= bootstrap_icon('icon-trash') %>
-    <% end %>
+      <span>Game <%= game.id %></span>
+      <%= link_to 'Show', game, id: dom_id(game, 'show') %>
   <% end %>
-  </ul>
+</ul>
 
-<br />
-
-<%= link_to 'New Game', new_game_path %>
-
-
+<br/>
 
 <%= paginate @games %>
+
+<br/>
+
+<%= link_to 'New Practice Game', new_game_path, id: 'new_game' %>
+

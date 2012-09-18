@@ -6,12 +6,8 @@ describe "games/index" do
   before(:each) do
     @games =
     assign(:games, [
-      stub_model(Game, id: 100 ,
-        level: "Level"
-      ),
-      stub_model(Game, id: 101 ,
-        level: "Level"
-      )
+      stub_model(Game, id: 100),
+      stub_model(Game, id: 101)
     ])
     view.stub!(:paginate)
   end
@@ -19,25 +15,26 @@ describe "games/index" do
   it "renders a list of games" do
     render
     within("#game_100") do
-      rendered.should have_content("Level")
+      rendered.should have_content("Game 100")
     end
     within("#game_101") do
-      rendered.should have_content("Level")
+      rendered.should have_content("Game 101")
     end
   end
 
   it "renders a actions of games" do
     render
     within("#game_100") do
-      rendered.should have_link("show_game_100")
-      rendered.should have_link("delete_game_100")
-      rendered.should have_link("edit_game_100")
+      rendered.should have_link("show_game_100", href: game_path(100))
     end
     within("#game_101") do
-      rendered.should have_link("show_game_101")
-      rendered.should have_link("delete_game_101")
-      rendered.should have_link("edit_game_101")
+      rendered.should have_link("show_game_101", href: game_path(101))
     end
+  end
+
+  it "should have a new_game link" do
+    render
+    rendered.should have_link("new_game", href: new_game_path)
   end
 
   it "should rendered the pagination" do

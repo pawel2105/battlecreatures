@@ -8,11 +8,11 @@
 
     <%%= link_to edit_<%= singular_table_name %>_path(<%= singular_table_name %>),
               id: dom_id(<%= singular_table_name %>,'edit') do %>
-    <%%= bootstrap_icon('icon-pencil') %>
+        Edit
     <%% end %>
     <%%= link_to <%= singular_table_name %>, method: :delete, data: { confirm: 'Are you sure?', ok: "Delete" },
               id: dom_id(<%= singular_table_name %>,'delete') do %>
-    <%%= bootstrap_icon('icon-trash') %>
+        Destroy
     <%% end %>
   <%% end %>
   </ul>

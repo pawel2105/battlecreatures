@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917152852) do
+ActiveRecord::Schema.define(:version => 20120918130916) do
 
   create_table "games", :force => true do |t|
     t.string   "word"
@@ -32,5 +32,13 @@ ActiveRecord::Schema.define(:version => 20120917152852) do
   end
 
   add_index "users", ["uid", "provider"], :name => "index_users_on_uid_and_provider"
+
+  create_table "words", :force => true do |t|
+    t.string   "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "words", ["value"], :name => "index_words_on_value", :unique => true
 
 end

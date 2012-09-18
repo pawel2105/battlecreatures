@@ -1,11 +1,20 @@
 require 'spec_helper'
 
-describe "Games" do
-  describe "GET /games" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get games_path
-      response.status.should be(200)
-    end
+describe 'Starting a new practice game' do
+
+  it "must allow you to start a new practice game and play" do
+    add_headers('X_MXIT_USERID_R' => 'm2604100')
+    visit '/'
+    click_link('new_game')
+    click_button 'start_game'
+    page.should have_content("You have 9 attempts left")
+    page.should have_content("______") # better
+    click_link('a')
+    page.should have_content("You have 8 attempts left")
+    page.should have_content("______") # better
+    click_link('b')
+    page.should have_content("You have 8 attempts left")
+    page.should have_content("b_____") # better
   end
+
 end

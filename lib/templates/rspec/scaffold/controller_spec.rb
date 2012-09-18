@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe <%= controller_class_name %>Controller do
-  it_behaves_like "a cancan controller" do
-    let(:subject){create(:<%= file_name %>)}
-    let(:default_params){{}}
-  end
 
   context "functionality" do
 

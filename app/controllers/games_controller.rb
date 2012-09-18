@@ -14,31 +14,14 @@ class GamesController < ApplicationController
 
   end
 
-  def edit
-
-  end
-
   def create
-
+    @game.user = current_user
+    @game.select_random_word
     if @game.save
       redirect_to @game, notice: 'Game was successfully created.'
     else
-      render action: "new"
+      redirect_to({action: 'index'}, alert: 'Failed to create new game.')
     end
   end
 
-  def update
-
-    if @game.update_attributes(params[:game])
-      redirect_to @game, notice: 'Game was successfully updated.'
-    else
-      render action: "edit"
-    end
-  end
-
-  def destroy
-    @game.destroy
-
-    redirect_to games_url
-  end
 end

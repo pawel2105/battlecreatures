@@ -12,4 +12,11 @@ describe Game do
     Game.new(user_id: 123).should have(0).errors_on(:user_id)
   end
 
+  it "must generate a word" do
+    Word.should_receive(:random_value).and_return('wood')
+    game = Game.new
+    game.select_random_word
+    game.word.should == "wood"
+  end
+
 end
