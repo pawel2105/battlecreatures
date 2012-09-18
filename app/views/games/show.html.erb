@@ -1,5 +1,22 @@
+<% if @game.is_won? %>
+You win
+<% elsif @game.is_lost? %>
+You lose
+<% else %>
 You have <span><%= @game.attempts_left %></span> attempts left
+<% end %>
 
 <br/>
 
-<%= link_to 'Back', games_path, id: "games_index" %>
+<span><%= @game.hangman_text %></span>
+<br/>
+<% if @game.done? %>
+    <%= link_to 'New Game', new_game_path, id: "new_game" %>
+<% else %>
+    <% ("a".."z").each do |letter| -%>
+        <%= link_to(letter, play_letter_game_path(@game,letter), id: letter) %>
+    <% end -%>
+<% end %>
+<br/>
+
+<%= link_to 'Leave Game', games_path, id: "games_index" %>

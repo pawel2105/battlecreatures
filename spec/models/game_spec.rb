@@ -82,4 +82,59 @@ describe Game do
 
   end
 
+  context "hangman_text" do
+
+    it "must return the correct hangman text" do
+      game = Game.new(word: "hangman", choices: "angmh")
+      game.hangman_text.should == "hangman"
+      game = Game.new(word: "hangman", choices: "b")
+      game.hangman_text.should == "_______"
+      game = Game.new(word: "hangman", choices: "a")
+      game.hangman_text.should == "_a___a_"
+      game = Game.new(word: "hangman", choices: "ahca")
+      game.hangman_text.should == "ha___a_"
+    end
+
+    it "must return the full word if game done" do
+      game = Game.new(word: "hangman", choices: "a")
+      game.should_receive(:done?).and_return(true)
+      game.hangman_text.should == "hangman"
+    end
+
+  end
+
+  context "done?" do
+
+    it "must be done if no more attempts left" do
+      game = Game.new
+      game.should_receive(:attempts_left).and_return(0)
+      game.should be_done
+    end
+
+    it "must be done if all letters chosen" do
+      game = Game.new(word: "hangman", choices: "angmh")
+      game.should be_done
+    end
+
+  end
+
+  context "is_won?" do
+
+    it "must be done if all letters chosen" do
+      game = Game.new(word: "hangman", choices: "angmh")
+      game.should be_is_won
+    end
+
+  end
+
+  context "is_lost?" do
+
+    it "must be lost if no more attempts left" do
+      game = Game.new
+      game.should_receive(:attempts_left).and_return(0)
+      game.should be_is_lost
+    end
+
+  end
+
 end

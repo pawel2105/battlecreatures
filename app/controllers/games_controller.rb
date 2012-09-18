@@ -10,6 +10,12 @@ class GamesController < ApplicationController
 
   end
 
+  def play_letter
+    @game.add_choice(params[:letter])
+    @game.save
+    render action: 'show'
+  end
+
   def new
 
   end

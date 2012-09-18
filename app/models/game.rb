@@ -11,9 +11,9 @@ class Game < ActiveRecord::Base
 
   def add_choice(letter)
     self.choices ||= ""
-    return if has_no_attempts_left? || letter.to_s.size > 1
+    return if is_lost? || letter.to_s.size > 1
     letter.downcase!
-    self.choices << letter if letter =~ /\p{Lower}/
+    self.choices += letter if letter =~ /\p{Lower}/
   end
 
   def attempts_left
@@ -28,8 +28,24 @@ class Game < ActiveRecord::Base
     attempts_left > 0
   end
 
-  def has_no_attempts_left?
+  def hangman_text
+    return word if done?
+    text = word
+    word.split("").each{|letter| text.gsub!(letter,"_") unless choices.to_s.include?(letter)}
+    text
+  end
+
+  def done?
+    is_lost? || is_won?
+  end
+
+  def is_won?
+    (word.split("") - choices.to_s.split("")).empty?
+  end
+
+  def is_lost?
     !has_attempts_left?
   end
+
 
 end

@@ -32,7 +32,7 @@ describe GamesController do
 
     end
 
-      describe "GET show" do
+    describe "GET show" do
 
       before :each do
         @game = create(:game)
@@ -48,16 +48,41 @@ describe GamesController do
       end
     end
 
+    describe "GET play_letter" do
+
+      before :each do
+        @game = create(:game, choices: "a")
+      end
+
+      def do_get_play_letter
+        get :play_letter, :id => @game.to_param, :letter => "g"
+      end
+
+      it "assigns the requested game as @game" do
+        do_get_play_letter
+        assigns(:game).should eq(@game)
+        @game.reload
+        @game.choices.should include("g")
+      end
+
+      it "render the show template" do
+        do_get_play_letter
+        response.should render_template('show')
+      end
+
+    end
+
     describe "GET new" do
 
       def do_get_new
         get :new
-     end
+      end
 
       it "assigns a new game as @game" do
         do_get_new
         assigns(:game).should be_a_new(Game)
       end
+
     end
 
     # update the return value of this method accordingly.

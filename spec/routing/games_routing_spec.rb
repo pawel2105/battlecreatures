@@ -19,5 +19,9 @@ describe GamesController do
       post("/games").should route_to("games#create")
     end
 
+    it "routes to #show" do
+      get("/games/1/letter/a").should route_to("games#play_letter", id: "1", letter: "a")
+    end
+
   end
 end
