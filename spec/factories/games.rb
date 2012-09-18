@@ -4,6 +4,6 @@ FactoryGirl.define do
   factory :game do
     word "MyString"
     choices "MyText"
-    user nil
+    user
   end
 end
