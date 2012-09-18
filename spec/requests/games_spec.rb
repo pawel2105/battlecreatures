@@ -30,7 +30,7 @@ describe 'Starting a new practice game' do
     visit '/'
     click_link('new_game')
     click_button 'start_game'
-    %W(a b c d f g h i).each do |letter|
+    %W(a b c d f g h i k).each do |letter|
       click_link(letter)
       page.should have_content("______")
     end

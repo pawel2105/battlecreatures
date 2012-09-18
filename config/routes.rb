@@ -5,5 +5,5 @@ HangmanLeague::Application.routes.draw do
     end
   end
   root :to => 'games#index'
-
+  match '/auth/:provider/callback', to: 'sessions#create'
 end

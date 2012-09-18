@@ -1,4 +1,4 @@
-if Word.count == "0"
+if Word.count == 0
   FactoryGirl.create(:word, value: 'love')
   FactoryGirl.create(:word, value: 'makes')
   FactoryGirl.create(:word, value: 'world')

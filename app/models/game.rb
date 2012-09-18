@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
-  ATTEMPTS = 9
+  ATTEMPTS = 10
   belongs_to :user
   attr_accessible :choices, :word, :user_id
 
