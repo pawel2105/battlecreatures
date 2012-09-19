@@ -7,11 +7,15 @@ You have <span><%= @game.attempts_left %></span> attempts left
 <% end %>
 
 <br/>
-<pre <% if @game %>style="color:red;"<% end %>><%= render partial: 'hangman' %></pre>
-<span><%= @game.hangman_text %></span>
+<div <% if @game.is_lost? %>style="color:red;"<% end %>><%= render partial: 'hangman' %></div>
+<br/>
+<span style="color:purple;"><%= @game.hangman_text %></span>
+<br/>
 <br/>
 <% if @game.done? %>
     <%= link_to 'new', new_game_path, id: "new_game" %> game
+    <br/>
+    View <%= link_to 'rank', user_path(current_user), id: 'view_rank' %>
 <% else %>
     <% ("a".."z").each do |letter| -%>
         <%= link_to(letter, play_letter_game_path(@game,letter), id: letter) %>
