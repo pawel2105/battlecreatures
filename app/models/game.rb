@@ -7,6 +7,7 @@ class Game < ActiveRecord::Base
 
   after_validation do |record|
     record.completed = record.done?
+    set_score if record.completed?
   end
 
   scope :active_first, order('completed ASC, created_at DESC').where('completed IS NOT NULL')
@@ -52,6 +53,21 @@ class Game < ActiveRecord::Base
 
   def is_lost?
     !has_attempts_left?
+  end
+
+  def correct_choices
+    word.to_s.split("") & choices.to_s.split("")
+  end
+
+  def time_score
+    return 0 unless created_at
+    [5 - ((Time.current - created_at).to_i / 60),0].max
+  end
+
+  protected
+
+  def set_score
+    self.score ||= correct_choices.size + attempts_left + time_score
   end
 
 

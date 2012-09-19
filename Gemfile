@@ -18,6 +18,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'timecop'
   gem 'annotate'
   gem 'rspec-rails'
   gem 'factory_girl_rails'

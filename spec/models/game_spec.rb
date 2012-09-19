@@ -82,6 +82,21 @@ describe Game do
 
   end
 
+  context "correct_choices" do
+
+    it "must return the correct amount for attempts" do
+      game = Game.new(word: "testing", choices: "a")
+      game.should have(0).correct_choices
+      game = Game.new(word: "testing", choices: "at")
+      game.should have(1).correct_choices
+      game = Game.new(word: "testing", choices: "test")
+      game.should have(3).correct_choices
+      game = Game.new(word: "testing", choices: "atestinb")
+      game.should have(5).correct_choices
+    end
+
+  end
+
   context "hangman_text" do
 
     it "must return the correct hangman text" do
@@ -137,7 +152,7 @@ describe Game do
 
   end
 
-  context "save" do
+  context "is_done" do
 
     it "must set is_done" do
       game = stub_model(Game, done?: true)
@@ -146,6 +161,50 @@ describe Game do
       game = stub_model(Game, done?: false)
       game.save
       game.should_not be_completed
+    end
+
+  end
+
+  context "time_score" do
+
+    it "must set correct time" do
+      time = 10.minutes.ago
+
+      game = stub_model(Game, created_at: time)
+      Timecop.freeze(time + 30.seconds) do
+        game.time_score.should == 5
+      end
+      Timecop.freeze(time + 1.minute) do
+        game.time_score.should == 4
+      end
+      Timecop.freeze(time + 4.minutes) do
+        game.time_score.should == 1
+      end
+      Timecop.freeze(time + 10.minutes) do
+        game.time_score.should == 0
+      end
+    end
+
+  end
+
+  context "set_score" do
+
+    before :each do
+      @game = stub_model(Game, done?: true)
+    end
+
+    it "wont set score if not done?" do
+      @game.stub!(:done?).and_return(false)
+      @game.save
+      @game.score.should be_nil
+    end
+
+    it "must set score to correct choices + attempts left + time_score" do
+      @game.stub!(:attempts_left).and_return(2)
+      @game.stub!(:correct_choices).and_return(['a','b'])
+      @game.stub!(:time_score).and_return(2)
+      @game.save
+      @game.score.should == 6
     end
 
   end

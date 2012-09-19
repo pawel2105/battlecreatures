@@ -6,8 +6,8 @@ describe "games/index" do
   before(:each) do
     @games =
     assign(:games, [
-      stub_model(Game, id: 100, done?: true, hangman_text: "hello"),
-      stub_model(Game, id: 101, done?: false, hangman_text: "goodbye")
+      stub_model(Game, id: 100, done?: true, hangman_text: "hello", score: 100),
+      stub_model(Game, id: 101, done?: false, hangman_text: "goodbye", score: 500)
     ])
     view.stub!(:paginate)
   end
@@ -16,9 +16,11 @@ describe "games/index" do
     render
     within("#game_100") do
       rendered.should have_content("hello")
+      rendered.should have_content("100")
     end
     within("#game_101") do
       rendered.should have_content("goodbye")
+      rendered.should have_content("500")
     end
   end
 
