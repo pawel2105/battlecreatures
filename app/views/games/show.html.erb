@@ -7,7 +7,7 @@ You have <span><%= @game.attempts_left %></span> attempts left
 <% end %>
 
 <br/>
-
+<pre <% if @game %>style="color:red;"<% end %>><%= render partial: 'hangman' %></pre>
 <span><%= @game.hangman_text %></span>
 <br/>
 <% if @game.done? %>
