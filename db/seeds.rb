@@ -1,10 +1,6 @@
 if Word.count == 0
-  FactoryGirl.create(:word, value: 'love')
-  FactoryGirl.create(:word, value: 'makes')
-  FactoryGirl.create(:word, value: 'world')
-  FactoryGirl.create(:word, value: 'round')
-  FactoryGirl.create(:word, value: 'adam')
-  FactoryGirl.create(:word, value: 'baby')
-  FactoryGirl.create(:word, value: 'house')
-  FactoryGirl.create(:word, value: 'books')
+  File.readlines('db/words.txt').each do |word|
+    Word.create(value: word)
+  end
+  puts "words: #{Word.count}"
 end
