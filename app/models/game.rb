@@ -5,6 +5,13 @@ class Game < ActiveRecord::Base
 
   validates :word, :user_id, presence: true
 
+  after_validation do |record|
+    record.completed = record.done?
+  end
+
+  scope :active_first, order('completed ASC, created_at DESC').where('completed IS NOT NULL')
+
+
   def select_random_word
     self.word = Word.random_value
   end
@@ -21,7 +28,7 @@ class Game < ActiveRecord::Base
   end
 
   def attempts
-    (choices.to_s.split("") - word.split("")).size
+    (choices.to_s.split("") - word.to_s.split("")).size
   end
 
   def has_attempts_left?
@@ -40,7 +47,7 @@ class Game < ActiveRecord::Base
   end
 
   def is_won?
-    (word.split("") - choices.to_s.split("")).empty?
+    (word.to_s.split("") - choices.to_s.split("")).empty?
   end
 
   def is_lost?

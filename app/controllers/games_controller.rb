@@ -3,7 +3,7 @@ class GamesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @games = @games.page(params[:page])
+    @games = @games.active_first.page(params[:page])
   end
 
   def show

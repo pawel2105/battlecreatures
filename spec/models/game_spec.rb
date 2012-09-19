@@ -137,4 +137,17 @@ describe Game do
 
   end
 
+  context "save" do
+
+    it "must set is_done" do
+      game = stub_model(Game, done?: true)
+      game.save
+      game.should be_completed
+      game = stub_model(Game, done?: false)
+      game.save
+      game.should_not be_completed
+    end
+
+  end
+
 end
