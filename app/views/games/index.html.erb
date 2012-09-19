@@ -2,7 +2,7 @@
   <%= content_tag_for(:li, @games) do |game| %>
       <span><%= game.hangman_text %></span>
       <span><%= game.score %></span>
-      <%= link_to(game.done? ? 'Show' : 'Continue', game, id: dom_id(game, 'show')) %>
+      <%= link_to(game.done? ? 'show' : 'continue', game, id: dom_id(game, 'show')) %>
   <% end %>
 </ul>
 
@@ -12,5 +12,8 @@
 
 <br/>
 
-<%= link_to 'New', new_game_path, id: 'new_game' %> Game
+<%= link_to 'new', new_game_path, id: 'new_game' %> Game
+
+<br/>
+View <%= link_to 'rank', user_path(current_user), id: 'view_rank' %>
 

@@ -18,6 +18,83 @@ describe User do
     User.new(uid: 'xx', provider: "zz").should have(0).errors_on(:uid)
   end
 
+  it "must return the amount of games" do
+    user = create(:user)
+    user.game_count.should == 0
+    create(:game, user: user)
+    user.game_count.should == 1
+    create_list(:game,5, user: user)
+    user.game_count.should == 6
+  end
+
+  context "calculate_score" do
+
+    it "must use the top 20 games in the last week" do
+      user = stub_model(User)
+      games = mock('games')
+      user.should_receive(:games).and_return(games)
+      games.should_receive(:this_week).and_return(games)
+      games.should_receive(:top).with(20).and_return(games)
+      games.should_receive(:sum).with(:score).and_return(20)
+      user.calculate_weekly_rating.should == 20
+    end
+
+    it "must use the top 80 games in the last month " do
+      user = stub_model(User)
+      games = mock('games')
+      user.should_receive(:games).and_return(games)
+      games.should_receive(:this_month).and_return(games)
+      games.should_receive(:top).with(80).and_return(games)
+      games.should_receive(:sum).with(:score).and_return(20)
+      user.calculate_monthly_rating.should == 20
+    end
+
+    it "must use the top 960 games in the last year " do
+      user = stub_model(User)
+      games = mock('games')
+      user.should_receive(:games).and_return(games)
+      games.should_receive(:this_year).and_return(games)
+      games.should_receive(:top).with(960).and_return(games)
+      games.should_receive(:sum).with(:score).and_return(20)
+      user.calculate_yearly_rating.should == 20
+    end
+
+    it "must update the ratings" do
+      user = stub_model(User)
+      user.stub(:calculate_weekly_rating).and_return(20)
+      user.stub(:calculate_monthly_rating).and_return(80)
+      user.stub(:calculate_yearly_rating).and_return(960)
+      user.should_receive(:update_attributes).with(weekly_rating: 20, monthly_rating: 80, yearly_rating: 960)
+      user.update_ratings
+    end
+
+  end
+
+  context "rank" do
+
+    it "should return correct weekly rank" do
+      user1, user3, user2 = create(:user, weekly_rating: 20), create(:user, weekly_rating: 40), create(:user, weekly_rating: 30)
+      user1.weekly_rank.should == 3
+      user3.weekly_rank.should == 1
+      user2.weekly_rank.should == 2
+    end
+
+    it "should return correct monthly rank" do
+      user1, user3, user2 = create(:user, monthly_rating: 20), create(:user, monthly_rating: 40), create(:user, monthly_rating: 30)
+      user1.monthly_rank.should == 3
+      user3.monthly_rank.should == 1
+      user2.monthly_rank.should == 2
+    end
+
+    it "should return correct yearly rank" do
+      user1, user3, user2 = create(:user, yearly_rating: 20), create(:user, yearly_rating: 40), create(:user, yearly_rating: 30)
+      user1.yearly_rank.should == 3
+      user3.yearly_rank.should == 1
+      user2.yearly_rank.should == 2
+    end
+
+  end
+
   context "find_or_create_from_auth_hash" do
 
     it "must create a new user if no uid and provider match exists" do

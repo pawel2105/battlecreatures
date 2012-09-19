@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  attr_accessible :name, :provider, :uid
+  attr_accessible :name, :provider, :uid, :weekly_rating, :monthly_rating, :yearly_rating
+
+  has_many :games
 
   validates :provider, :uid, presence: true
   validates_uniqueness_of :uid, :scope => :provider
@@ -16,6 +18,40 @@ class User < ActiveRecord::Base
       user.save!
     end
     return user
+  end
+
+  def calculate_weekly_rating
+    games.this_week.top(20).sum(:score)
+  end
+
+  def calculate_monthly_rating
+    games.this_month.top(80).sum(:score)
+  end
+
+  def calculate_yearly_rating
+    games.this_year.top(960).sum(:score)
+  end
+
+  def update_ratings
+    update_attributes(weekly_rating: calculate_weekly_rating,
+                      monthly_rating: calculate_monthly_rating,
+                      yearly_rating: calculate_yearly_rating)
+  end
+
+  def weekly_rank
+    User.where("weekly_rating > ?", weekly_rating).count + 1
+  end
+
+  def monthly_rank
+    User.where("monthly_rating > ?", monthly_rating).count + 1
+  end
+
+  def yearly_rank
+    User.where("yearly_rating > ?", yearly_rating).count + 1
+  end
+
+  def game_count
+    games.count
   end
 
 end

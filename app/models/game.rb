@@ -10,8 +10,13 @@ class Game < ActiveRecord::Base
     set_score if record.completed?
   end
 
-  scope :active_first, order('completed ASC, created_at DESC').where('completed IS NOT NULL')
+  after_save :update_user_score
 
+  scope :active_first, order('completed ASC, created_at DESC').where('completed IS NOT NULL')
+  scope :this_week, lambda{ where('created_at > ?',Time.current.beginning_of_week) }
+  scope :this_month, lambda{ where('created_at > ?',Time.current.beginning_of_month) }
+  scope :this_year, lambda{ where('created_at > ?',Time.current.beginning_of_year) }
+  scope :top, lambda{ |amount| limit(amount) }
 
   def select_random_word
     self.word = Word.random_value
@@ -68,6 +73,10 @@ class Game < ActiveRecord::Base
 
   def set_score
     self.score ||= correct_choices.size + attempts_left + time_score
+  end
+
+  def update_user_score
+    user.update_ratings if completed?
   end
 
 

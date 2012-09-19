@@ -16,6 +16,9 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by_id(session[:current_user_id])
   end
 
+  helper_method :current_user
+
+
   def login_required
     return true if current_user
     access_denied
