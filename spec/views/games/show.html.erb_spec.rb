@@ -7,6 +7,7 @@ describe "games/show" do
                                           done?: false,
                                           is_won?: false,
                                           is_lost?: false))
+    view.stub!(:current_user).and_return(stub_model(User, id: 50))
   end
 
   it "must show the attempts left" do
@@ -39,6 +40,12 @@ describe "games/show" do
     @game.stub(:done?).and_return(true)
     render
     rendered.should have_link('new_game', href: new_game_path)
+  end
+
+  it "should have a view rank link if done" do
+    @game.stub(:done?).and_return(true)
+    render
+    rendered.should have_link("view_rank", href: user_path(50))
   end
 
   it "wont have new game link if not done" do

@@ -11,7 +11,6 @@ describe "games/index" do
     ])
     view.stub!(:paginate)
     view.stub!(:current_user).and_return(stub_model(User, id: 50))
-
   end
 
   it "renders a list of games" do
