@@ -14,7 +14,7 @@ You have <span><%= @game.attempts_left %></span> attempts left
     view <%= link_to 'rank', user_path(current_user), id: 'view_rank' %>
 <% else %>
     <% ("a".."z").each do |letter| -%>
-        &nbsp;&nbsp;<%= link_to(letter, play_letter_game_path(@game,letter), id: letter) %>
+      <%= link_to(letter, play_letter_game_path(@game,letter), id: letter) %>
     <% end -%>
 <% end %>
 <br/>
