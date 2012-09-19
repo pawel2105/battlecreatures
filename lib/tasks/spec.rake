@@ -1,3 +1,4 @@
+begin
 require 'rspec/core/rake_task'
 
 desc "Run specs"
@@ -16,4 +17,7 @@ desc "Run Browser"
 RSpec::Core::RakeTask.new('browser_specs') do |task|
   task.pattern = ["browser_spec/features/*_spec.rb"]
   task.rspec_opts = ["-fd"] + Dir.glob("[0-9][0-9][0-9]_*").collect { |x| "-I#{x}" }.sort
+end
+rescue
+
 end
