@@ -1,7 +1,7 @@
 class Word < ActiveRecord::Base
   attr_accessible :value
 
-  validates :value, presence: true, uniqueness: true, format: /^\p{Lower}*$/
+  validates :value, uniqueness: true, format: /^\p{Lower}*$/, length: { :minimum => 4 }
 
   before_validation :downcase_value
 

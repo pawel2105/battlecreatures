@@ -6,7 +6,7 @@ describe Word do
 
     it "must have a value" do
       Word.new.should have(1).errors_on(:value)
-      Word.new(value: 'xx').should have(0).errors_on(:value)
+      Word.new(value: 'testing').should have(0).errors_on(:value)
     end
 
     it "must have a unique value" do
@@ -19,6 +19,11 @@ describe Word do
       Word.new(value: 'he11o').should have(1).errors_on(:value)
       Word.new(value: 'goodbye!').should have(1).errors_on(:value)
       Word.new(value: 'g**d').should have(1).errors_on(:value)
+    end
+
+    it "must be at least 4 letters" do
+      Word.new(value: 'day').should have(1).errors_on(:value)
+      Word.new(value: 'love').should have(0).errors_on(:value)
     end
 
   end
