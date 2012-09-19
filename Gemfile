@@ -8,6 +8,7 @@ gem 'thin'
 gem 'cancan'
 gem 'omniauth'
 gem 'kaminari'
+gem 'gabba'
 # gem 'jquery-rails'
 
 # Gems used only for assets and not required

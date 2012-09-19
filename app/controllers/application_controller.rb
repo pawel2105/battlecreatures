@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :load_mxit_user
+  before_filter :send_stats, :load_mxit_user
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, :alert => exception.message
@@ -37,10 +37,14 @@ class ApplicationController < ActionController::Base
     false
   end
 
-  def load_mxit_user
-    request.env.to_hash.each do |key,value|
-      logger.debug "#{key}: #{value}" if key.downcase.include?("mxit")
+  def send_stats
+    if ENV['GA_TRACKING_CODE']
+      Gabba::Gabba.new(ENV['GA_TRACKING_CODE'], "mxithangmanleague.herokuapp.com").
+        page_view("#{params[:controller]} #{params[:action]}", request.path)
     end
+  end
+
+  def load_mxit_user
     if request.env['HTTP_X_MXIT_USERID_R']
       @current_user = User.find_or_create_from_auth_hash(provider: 'mxit',
                                                               uid: request.env['HTTP_X_MXIT_USERID_R'],
