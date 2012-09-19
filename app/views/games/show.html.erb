@@ -5,16 +5,12 @@ You lose!
 <% else %>
 You have <span><%= @game.attempts_left %></span> attempts left
 <% end %>
-
-<br/>
 <div <% if @game.is_lost? %>style="color:red;"<% end %>><%= render partial: 'hangman' %></div>
 <br/>
 <span style="color:purple;"><%= @game.hangman_text %></span>
 <br/>
-<br/>
 <% if @game.done? %>
-    <%= link_to 'new', new_game_path, id: "new_game" %> game
-    <br/>
+    <%= link_to 'new', new_game_path, id: "new_game" %> game |
     view <%= link_to 'rank', user_path(current_user), id: 'view_rank' %>
 <% else %>
     <% ("a".."z").each do |letter| -%>
@@ -22,5 +18,4 @@ You have <span><%= @game.attempts_left %></span> attempts left
     <% end -%>
 <% end %>
 <br/>
-
 <%= link_to 'leave', games_path, id: "games_index" %> game
