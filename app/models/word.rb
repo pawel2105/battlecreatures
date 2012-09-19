@@ -3,7 +3,7 @@ class Word < ActiveRecord::Base
 
   validates :value, uniqueness: true, format: /^\p{Lower}*$/, length: { :minimum => 4 }
 
-  before_validation :downcase_value
+  before_validation :downcase_value, :remove_spaces
 
   scope :random, order("RANDOM()")
 
@@ -15,6 +15,10 @@ class Word < ActiveRecord::Base
 
   def downcase_value
     value.downcase! if value
+  end
+
+  def remove_spaces
+    value.gsub!(/\s/,"") if value
   end
 
 end
