@@ -11,7 +11,7 @@ You have <span><%= @game.attempts_left %></span> attempts left
 <span><%= @game.hangman_text %></span>
 <br/>
 <% if @game.done? %>
-    <%= link_to 'New Game', new_game_path, id: "new_game" %>
+    <%= link_to 'new', new_game_path, id: "new_game" %> game
 <% else %>
     <% ("a".."z").each do |letter| -%>
         <%= link_to(letter, play_letter_game_path(@game,letter), id: letter) %>
@@ -19,4 +19,4 @@ You have <span><%= @game.attempts_left %></span> attempts left
 <% end %>
 <br/>
 
-<%= link_to 'Leave Game', games_path, id: "games_index" %>
+<%= link_to 'leave', games_path, id: "games_index" %> game
