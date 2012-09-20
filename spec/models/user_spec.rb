@@ -101,6 +101,7 @@ describe User do
       create_list(:won_game, 960,  score: 1, user: user)
       create(:won_game, score: 41, user: user)
       user.calculate_yearly_rating.should == 1000
+      puts Time.current
     end
 
   end
@@ -112,8 +113,10 @@ describe User do
       user.stub(:calculate_weekly_rating).and_return(20)
       user.stub(:calculate_monthly_rating).and_return(80)
       user.stub(:calculate_yearly_rating).and_return(960)
-      user.should_receive(:update_attributes).with(weekly_rating: 20, monthly_rating: 80, yearly_rating: 960)
       user.update_ratings
+      user.weekly_rating.should == 20
+      user.monthly_rating.should == 80
+      user.yearly_rating.should == 960
     end
 
   end

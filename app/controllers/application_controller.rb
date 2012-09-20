@@ -46,12 +46,9 @@ class ApplicationController < ActionController::Base
         g.user_agent = request.env['HTTP_USER_AGENT']
       end
       if current_user
-        g.identify_user(current_user.id.to_s)
-        g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath,
-                    "#{current_user.uid}_#{current_user.provider}")
-      else
-        g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath)
+        g.identify_user("#{current_user.uid}_#{current_user.provider}")
       end
+      g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath)
     end
   end
 
