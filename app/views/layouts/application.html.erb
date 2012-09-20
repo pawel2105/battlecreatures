@@ -9,9 +9,9 @@
 <body>
 
 <% if notice -%>
-    <section class="alert alert-info"><%= notice %></section>
+    <div class="alert alert-info"><%= notice %></div>
 <% elsif alert -%>
-    <section class="alert alert-block"><%= alert %></section>
+    <div class="alert alert-block"><%= alert %></div>
 <% end -%>
 
 <%= yield %>
