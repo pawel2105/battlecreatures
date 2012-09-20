@@ -67,7 +67,7 @@ describe GamesController do
 
       it "render the show template" do
         do_get_play_letter
-        response.should render_template('show')
+        response.should redirect_to(@game)
       end
 
     end

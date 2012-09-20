@@ -28,6 +28,13 @@ describe "games/show" do
     end
   end
 
+  it "wont letter links that are already chosen" do
+    @game.stub!(:choices).and_return("cz")
+    render
+    rendered.should_not have_link('c', href: play_letter_game_path(@game,'c'))
+    rendered.should_not have_link('z', href: play_letter_game_path(@game,'c'))
+  end
+
   it "wont show the letters if game is done" do
     @game.stub(:done?).and_return(true)
     render

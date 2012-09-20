@@ -13,7 +13,7 @@ class GamesController < ApplicationController
   def play_letter
     @game.add_choice(params[:letter])
     @game.save
-    render action: 'show'
+    redirect_to action: 'show'
   end
 
   def new
