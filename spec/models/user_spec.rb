@@ -27,37 +27,85 @@ describe User do
     user.game_count.should == 6
   end
 
-  context "calculate_score" do
+  context "calculate_weekly_rating" do
 
-    it "must use the top 20 games in the last week" do
-      user = stub_model(User)
-      games = mock('games')
-      user.should_receive(:games).and_return(games)
-      games.should_receive(:this_week).and_return(games)
-      games.should_receive(:top).with(20).and_return(games)
-      games.should_receive(:sum).with(:score).and_return(20)
+    it "must use 20 games in the last week" do
+      user = create(:user)
+      create_list(:won_game, 21,  score: 1, user: user)
       user.calculate_weekly_rating.should == 20
     end
 
-    it "must use the top 80 games in the last month " do
-      user = stub_model(User)
-      games = mock('games')
-      user.should_receive(:games).and_return(games)
-      games.should_receive(:this_month).and_return(games)
-      games.should_receive(:top).with(80).and_return(games)
-      games.should_receive(:sum).with(:score).and_return(20)
+    it "must use games only from this week" do
+      user = create(:user)
+      create(:won_game, score: 20, user: user)
+      Timecop.freeze(1.week.ago - 1.day) do
+        create(:won_game, score: 20, user: user)
+      end
+      user.calculate_weekly_rating.should == 20
+    end
+
+    it "must use top scoring games in the last week" do
+      user = create(:user)
+      create_list(:won_game, 20,  score: 1, user: user)
+      create(:won_game, score: 21, user: user)
+      user.calculate_weekly_rating.should == 40
+    end
+
+  end
+
+  context "calculate_monthly_rating" do
+
+    it "must use 80 games in the last month" do
+      user = create(:user)
+      create_list(:won_game, 81,  score: 1, user: user)
+      user.calculate_monthly_rating.should == 80
+    end
+
+    it "must use games only from this month" do
+      user = create(:user)
+      create(:won_game, score: 20, user: user)
+      Timecop.freeze(1.month.ago - 1.day) do
+        create(:won_game, score: 20, user: user)
+      end
       user.calculate_monthly_rating.should == 20
     end
 
-    it "must use the top 960 games in the last year " do
-      user = stub_model(User)
-      games = mock('games')
-      user.should_receive(:games).and_return(games)
-      games.should_receive(:this_year).and_return(games)
-      games.should_receive(:top).with(960).and_return(games)
-      games.should_receive(:sum).with(:score).and_return(20)
+    it "must use top scoring games in the last week" do
+      user = create(:user)
+      create_list(:won_game, 80,  score: 1, user: user)
+      create(:won_game, score: 21, user: user)
+      user.calculate_monthly_rating.should == 100
+    end
+
+  end
+
+  context "calculate_yearly_rating" do
+
+    it "must use 960 games in the last month" do
+      user = create(:user)
+      create_list(:won_game, 961,  score: 1, user: user)
+      user.calculate_yearly_rating.should == 960
+    end
+
+    it "must use games only from this year" do
+      user = create(:user)
+      create(:won_game, score: 20, user: user)
+      Timecop.freeze(1.year.ago - 1.day) do
+        create(:won_game, score: 20, user: user)
+      end
       user.calculate_yearly_rating.should == 20
     end
+
+    it "must use top scoring games in the last year" do
+      user = create(:user)
+      create_list(:won_game, 960,  score: 1, user: user)
+      create(:won_game, score: 41, user: user)
+      user.calculate_yearly_rating.should == 1000
+    end
+
+  end
+
+  context "calculate_score" do
 
     it "must update the ratings" do
       user = stub_model(User)
