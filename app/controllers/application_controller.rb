@@ -45,8 +45,9 @@ class ApplicationController < ActionController::Base
       else
         g.user_agent = request.env['HTTP_USER_AGENT']
       end
-      g.identify_user(current_user.id)
+      g.identify_user(current_user.utma) if current_user.utma?
       g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath,current_user.id)
+      current_user.update_attribute(:utma,gabba.utma) unless current_user.utma?
     end
   end
 
