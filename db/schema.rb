@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920104427) do
+ActiveRecord::Schema.define(:version => 20120920153504) do
 
   create_table "games", :force => true do |t|
     t.string   "word"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20120920104427) do
     t.integer  "weekly_rating",  :default => 0
     t.integer  "monthly_rating", :default => 0
     t.integer  "yearly_rating",  :default => 0
+    t.string   "utma"
   end
 
   add_index "users", ["monthly_rating"], :name => "index_users_on_monthly_rating"
