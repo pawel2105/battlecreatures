@@ -11,9 +11,15 @@ class GamesController < ApplicationController
   end
 
   def play_letter
+    week_rating, monthly_rating = @game.user.weekly_rating, @game.user.monthly_rating
     @game.add_choice(params[:letter])
     @game.save
-    redirect_to action: 'show'
+    if week_rating < @game.user.weekly_rating
+      @notice = "Your weekly rating has increase to #{@game.user.weekly_rating}, your weekly rank is #{@game.user.weekly_rank}"
+    elsif monthly_rating < @game.user.monthly_rating
+      @notice = "Your monthly rating has increase to #{@game.user.monthly_rating}, your monthly rank is #{@game.user.monthly_rank}"
+    end
+    redirect_to @game, notice: @notice
   end
 
   def new

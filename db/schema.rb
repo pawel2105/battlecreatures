@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120919143418) do
+ActiveRecord::Schema.define(:version => 20120920104427) do
 
   create_table "games", :force => true do |t|
     t.string   "word"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(:version => 20120919143418) do
     t.integer  "score"
   end
 
+  add_index "games", ["created_at"], :name => "index_games_on_created_at"
+  add_index "games", ["score"], :name => "index_games_on_score"
   add_index "games", ["user_id"], :name => "index_games_on_user_id"
 
   create_table "users", :force => true do |t|

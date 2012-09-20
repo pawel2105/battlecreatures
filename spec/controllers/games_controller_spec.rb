@@ -70,6 +70,14 @@ describe GamesController do
         response.should redirect_to(@game)
       end
 
+      it "render adds a flash message if weekly_rating increases" do
+        @game = create(:game, word: "game", choices: "ame", user: @current_user)
+        expect {
+          do_get_play_letter
+        }.to change{@current_user.reload;@current_user.weekly_rating}
+        flash[:notice].should_not be_blank
+      end
+
     end
 
     describe "GET new" do

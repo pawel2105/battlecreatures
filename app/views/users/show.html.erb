@@ -2,15 +2,15 @@ Games Played: <%= @user.game_count %>
 <br/>
 Week Rank: <%= @user.weekly_rank.ordinalize %>
 <br/>
-Week Score: <%= @user.weekly_rating %>
+Week Rating: <%= @user.weekly_rating %>
 <br/>
 Month Rank: <%= @user.monthly_rank.ordinalize %>
 <br/>
-Month Score: <%= @user.monthly_rating %>
+Month Rating: <%= @user.monthly_rating %>
 <br/>
 Year Rank: <%= @user.yearly_rank.ordinalize %>
 <br/>
-Year Score: <%= @user.yearly_rating %>
+Year Rating: <%= @user.yearly_rating %>
 <br/>
 
 <%= link_to 'home', root_path, id: 'root_page' %>

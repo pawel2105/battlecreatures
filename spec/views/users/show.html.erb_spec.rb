@@ -16,9 +16,9 @@ describe "users/show.html.erb" do
     rendered.should have_content("Week Rank: 1st")
     rendered.should have_content("Month Rank: 2nd")
     rendered.should have_content("Year Rank: 3rd")
-    rendered.should have_content("Week Score: 20")
-    rendered.should have_content("Month Score: 80")
-    rendered.should have_content("Year Score: 960")
+    rendered.should have_content("Week Rating: 20")
+    rendered.should have_content("Month Rating: 80")
+    rendered.should have_content("Year Rating: 960")
   end
 
   it "should have a home page link" do
