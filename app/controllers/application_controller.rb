@@ -41,15 +41,15 @@ class ApplicationController < ActionController::Base
     if ENV['GA_TRACKING_CODE']
       g = Gabba::Gabba.new(ENV['GA_TRACKING_CODE'], "mxithangmanleague.herokuapp.com")
       if request.env['HTTP_X_DEVICE_USER_AGENT']
-        g.user_agent = "Mxit Agent (#{request.env['HTTP_X_DEVICE_USER_AGENT']})"
+        g.user_agent = request.env['HTTP_X_DEVICE_USER_AGENT']
       else
         g.user_agent = request.env['HTTP_USER_AGENT']
       end
       if current_user
-        g.page_view("#{params[:controller]} #{params[:action]}", request.path,
+        g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath,
                     "#{current_user.uid}_#{current_user.provider}")
       else
-        g.page_view("#{params[:controller]} #{params[:action]}", request.path)
+        g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath)
       end
     end
   end
