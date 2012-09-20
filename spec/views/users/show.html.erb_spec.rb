@@ -26,4 +26,14 @@ describe "users/show.html.erb" do
     rendered.should have_link("root_page", href: '/')
   end
 
+  it "should have a link to top weekly users" do
+    render
+    rendered.should have_link("view_top_week_users", href: users_path(order: 'top_week'))
+  end
+
+  it "should have a link to top monthly users" do
+    render
+    rendered.should have_link("view_top_month_users", href: users_path(order: 'top_month'))
+  end
+
 end

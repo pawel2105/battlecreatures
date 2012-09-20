@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
   validates :provider, :uid, presence: true
   validates_uniqueness_of :uid, :scope => :provider
 
+  scope :top_this_week, lambda{ |amount| order('weekly_rating DESC').limit(amount) }
+  scope :top_this_month, lambda{ |amount| order('monthly_rating DESC').limit(amount) }
+
   def self.find_or_create_from_auth_hash(auth_hash)
     auth_hash.stringify_keys!
     logger.debug "Auth Login Attempt with: #{auth_hash.to_s}"

@@ -7,7 +7,7 @@ HangmanLeague::Application.routes.draw do
       get "letter/:letter", action: 'play_letter', as: 'play_letter'
     end
   end
-  resources :users, :except => [:index, :create, :new, :edit, :update, :destroy]
+  resources :users, :except => [:create, :new, :edit, :update, :destroy]
   root :to => 'games#index'
   match '/auth/:provider/callback', to: 'sessions#create'
 end

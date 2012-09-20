@@ -22,6 +22,25 @@ describe UsersController do
 
     end
 
+    describe "GET index" do
+
+      def do_get_index
+        get :index
+      end
+
+      it "assigns all users as @users" do
+        user = create(:user)
+        do_get_index
+        assigns(:users).should include(user)
+      end
+
+      it "renders the application layout" do
+        do_get_index
+        response.should render_template("layouts/application")
+      end
+
+    end
+
   end
 
 end

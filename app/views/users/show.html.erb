@@ -13,6 +13,9 @@ Year Rank: <%= @user.yearly_rank.ordinalize %>
 Year Rating: <%= @user.yearly_rating %>
 <br/>
 
-<%= link_to 'home', root_path, id: 'root_page' %>
+<%= link_to 'home', root_path, id: 'root_page' %> |
+top <%= link_to 'week', users_path(order: 'top_week'), id: 'view_top_week_users' %> players |
+top <%= link_to 'month', users_path(order: 'top_month'), id: 'view_top_month_users' %> players
+
 
 

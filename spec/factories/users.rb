@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :user do
-    name "Grant"
+    sequence(:name) {|n| "User #{n}" }
     sequence(:uid) {|n| "uid#{n}" }
     provider "mxit"
   end

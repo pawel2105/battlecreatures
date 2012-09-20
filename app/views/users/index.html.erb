@@ -1,0 +1,12 @@
+<h1><%= params[:order].to_s.humanize %></h1>
+
+<ul>
+  <%= content_tag_for(:li, @users) do |user| %>
+    <%=  user.name %> - <%= params[:order] == 'top_week' ? user.weekly_rating : user.monthly_rating  %>
+  <% end %>
+</ul>
+
+<br/>
+
+<%= link_to 'home', root_path, id: 'root_page' %> |
+view <%= link_to 'rank', user_path(current_user), id: 'view_rank' %>
