@@ -101,7 +101,6 @@ describe User do
       create_list(:won_game, 960,  score: 1, user: user)
       create(:won_game, score: 41, user: user)
       user.calculate_yearly_rating.should == 1000
-      puts Time.current
     end
 
   end
