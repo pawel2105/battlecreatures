@@ -66,7 +66,7 @@ class Game < ActiveRecord::Base
 
   def time_score
     return 0 unless created_at
-    [5 - ((Time.current - created_at).to_i / 60),0].max
+    [10 - ((Time.current - created_at).to_i / 10),0].max
   end
 
   protected

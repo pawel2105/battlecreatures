@@ -171,16 +171,16 @@ describe Game do
       time = 10.minutes.ago
 
       game = stub_model(Game, created_at: time)
-      Timecop.freeze(time + 30.seconds) do
-        game.time_score.should == 5
+      Timecop.freeze(time + 9.seconds) do
+        game.time_score.should == 10
       end
-      Timecop.freeze(time + 1.minute) do
-        game.time_score.should == 4
+      Timecop.freeze(time + 19.seconds) do
+        game.time_score.should == 9
       end
-      Timecop.freeze(time + 4.minutes) do
-        game.time_score.should == 1
+      Timecop.freeze(time + 79.seconds) do
+        game.time_score.should == 3
       end
-      Timecop.freeze(time + 10.minutes) do
+      Timecop.freeze(time + 100.seconds) do
         game.time_score.should == 0
       end
     end
