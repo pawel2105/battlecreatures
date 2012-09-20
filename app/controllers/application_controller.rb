@@ -38,17 +38,15 @@ class ApplicationController < ActionController::Base
   end
 
   def send_stats
-    if ENV['GA_TRACKING_CODE']
+    if ENV['GA_TRACKING_CODE'] && current_user
       g = Gabba::Gabba.new(ENV['GA_TRACKING_CODE'], "mxithangmanleague.herokuapp.com")
       if request.env['HTTP_X_DEVICE_USER_AGENT']
         g.user_agent = request.env['HTTP_X_DEVICE_USER_AGENT']
       else
         g.user_agent = request.env['HTTP_USER_AGENT']
       end
-      if current_user
-        g.identify_user("#{current_user.uid}_#{current_user.provider}")
-      end
-      g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath)
+      g.identify_user("#{current_user.uid}_#{current_user.provider}")
+      g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath,"#{current_user.uid}_#{current_user.provider}")
     end
   end
 
