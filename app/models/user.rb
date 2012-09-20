@@ -21,15 +21,15 @@ class User < ActiveRecord::Base
   end
 
   def calculate_weekly_rating
-    games.this_week.top(20).inject(0){|sum,game| sum += game.score }
+    games.this_week.top(20).inject(0){|sum,game| sum += game.score.to_i }
   end
 
   def calculate_monthly_rating
-    games.this_month.top(80).inject(0){|sum,game| sum += game.score }
+    games.this_month.top(80).inject(0){|sum,game| sum += game.score.to_i }
   end
 
   def calculate_yearly_rating
-    games.this_year.top(960).inject(0){|sum,game| sum += game.score }
+    games.this_year.top(960).inject(0){|sum,game| sum += game.score.to_i }
   end
 
   def update_ratings
