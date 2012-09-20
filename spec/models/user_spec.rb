@@ -155,12 +155,12 @@ describe User do
     end
 
     it "must return existing user if uid and provider match exists" do
-      create(:user, uid: "u1", provider: "p", name: "Pawel")
+      user_id = create(:user, uid: "u1", provider: "p", name: "Pawel").id
       expect {
         user = User.find_or_create_from_auth_hash(uid: "u1", provider: "p", info: {name: "Grant"})
         user.uid.should == 'u1'
         user.provider.should == 'p'
-        user.name.should == 'Pawel'
+        user.id == user_id
       }.to change(User, :count).by(0)
     end
 
