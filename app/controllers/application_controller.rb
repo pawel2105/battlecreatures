@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
         profile = MxitProfile.new(request.env["HTTP_X_MXIT_PROFILE"])
         g.utmul = profile.language
         g.set_custom_var(1, 'Gender', profile.gender, 1)
-        g.set_custom_var(2, 'Age', profile.age, 1)
+        g.set_custom_var(2, 'Age', profile.age.to_s, 1)
       end
       if request.env["HTTP_X_MXIT_LOCATION"]
         location = MxitLocation.new(request.env["HTTP_X_MXIT_LOCATION"])
