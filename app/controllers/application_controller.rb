@@ -57,6 +57,7 @@ class ApplicationController < ActionController::Base
         g.set_custom_var(3, 'Country', location.country_name, 1)
         g.set_custom_var(4, 'Province', location.principal_subdivision_name, 1)
       end
+      g.set_custom_var(5, 'Provider', current_user.provider, 1)
       current_user.update_attribute(:utma,g.cookie_params(current_user.id)) unless current_user.utma?
       g.identify_user(current_user.utma) if current_user.utma?
       g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath,current_user.id)
