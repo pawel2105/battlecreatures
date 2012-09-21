@@ -13,7 +13,7 @@ describe "games/show" do
   it "must show the attempts left" do
     render
     rendered.should have_content("5")
-    rendered.should have_content("__t__")
+    rendered.should have_content("_ _ t _ _")
   end
 
   it "must have a games index link" do

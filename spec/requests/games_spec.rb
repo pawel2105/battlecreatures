@@ -8,18 +8,18 @@ describe 'Starting a new practice game' do
     visit '/'
     click_link('new_game')
     click_button 'start_game'
-    page.should have_content("______")
+    page.should have_content("_ _ _ _ _ _")
     click_link('a')
-    page.should have_content("______")
+    page.should have_content("_ _ _ _ _ _")
     click_link('b')
-    page.should have_content("b_____")
+    page.should have_content("b _ _ _ _ _")
     click_link('e')
-    page.should have_content("be__e_") # better
+    page.should have_content("b e _ _ e _") # better
     click_link('t')
-    page.should have_content("bette_")
+    page.should have_content("b e t t e _")
     click_link('r')
     page.should have_content("You win")
-    page.should have_content("better")
+    page.should have_content("b e t t e r")
     page.should have_link('new_game')
     page.should have_link('games_index')
   end
@@ -32,11 +32,11 @@ describe 'Starting a new practice game' do
     click_button 'start_game'
     %W(a b c d f g h i k).each do |letter|
       click_link(letter)
-      page.should have_content("______")
+      page.should have_content("_ _ _ _ _ _")
     end
     click_link 'j'
     page.should have_content("You lose")
-    page.should have_content("tester")
+    page.should have_content("t e s t e r")
     page.should have_link('new_game')
     page.should have_link('games_index')
   end
