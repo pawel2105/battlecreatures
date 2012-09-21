@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
   end
 
   def load_facebook_user
-    if ENV['FB_APP_ID'] && params[:signed_request]
+    if params[:signed_request]
       encoded_sig, payload = params[:signed_request].split('.')
       encoded_str = payload.gsub('-','+').gsub('_','/')
       encoded_str += '=' while !(encoded_str.size % 4).zero?
@@ -88,7 +88,7 @@ class ApplicationController < ActionController::Base
                                                                     uid: @data['user_id'],
                                                                   info: { name: "user #{@data['user_id']}"})
       else
-        redirect_to "https://www.facebook.com/dialog/oauth?client_id=#{ENV['FB_APP_ID']}{&redirect_uri=#{ENV['FB_CANVAS_PAGE']}"
+        redirect_to facebook_oauth_path
         false
       end
     end

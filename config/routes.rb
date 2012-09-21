@@ -8,6 +8,9 @@ HangmanLeague::Application.routes.draw do
     end
   end
   resources :users, :except => [:create, :new, :edit, :update, :destroy]
-  root :to => 'games#index'
+
+  match '/facebook_oauth', to: 'users#facebook_oauth', as: 'facebook_oauth'
   match '/auth/:provider/callback', to: 'sessions#create'
+
+  root :to => 'games#index'
 end
