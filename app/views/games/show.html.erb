@@ -1,7 +1,7 @@
 <% if @game.is_won? %>
-You win!
+<b style="color:green">You win!</b>
 <% elsif @game.is_lost? %>
-You lose!
+<b style="color:red">You lose!</b>
 <% else %>
 You have <span><%= @game.attempts_left %></span> attempts left
 <% end %>

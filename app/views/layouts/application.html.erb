@@ -9,9 +9,9 @@
 <body>
 
 <% if notice -%>
-    <div class="alert alert-info"><%= notice %></div>
+    <div class="alert alert-info" style="color:#00008b;"><%= notice %></div>
 <% elsif alert -%>
-    <div class="alert alert-block"><%= alert %></div>
+    <div class="alert alert-block" style="color:#8b0000;"><%= alert %></div>
 <% end -%>
 
 <%= yield %>
