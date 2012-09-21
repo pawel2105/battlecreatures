@@ -32,6 +32,7 @@ HangmanLeague::Application.configure do
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
+  config.logger = Logger.new(STDOUT)
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
