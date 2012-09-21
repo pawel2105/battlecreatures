@@ -46,10 +46,22 @@ class ApplicationController < ActionController::Base
       else
         g.user_agent = request.env['HTTP_USER_AGENT']
       end
+      if request.env["HTTP_X_MXIT_PROFILE"]
+        profile = MxitProfile(request.env["HTTP_X_MXIT_PROFILE"])
+        g.utmul = profile.language
+        g.set_custom_var(1, 'Gender', profile.gender, 1)
+        g.set_custom_var(2, 'Age', profile.age, 1)
+      end
+      if request.env["HTTP_X_MXIT_LOCATION"]
+        location = MxitLocation(request.env["HTTP_X_MXIT_LOCATION"])
+        g.set_custom_var(3, 'Country', location.country_name, 1)
+        g.set_custom_var(4, 'Province', profile.principal_subdivision_name, 1)
+      end
       current_user.update_attribute(:utma,g.cookie_params(current_user.id)) unless current_user.utma?
       g.identify_user(current_user.utma) if current_user.utma?
       g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath,current_user.id)
-      rescue
+      rescue Exception => e
+        Rails.logger.error e.message
         # ignore errors
       end
     end
