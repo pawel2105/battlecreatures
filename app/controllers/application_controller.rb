@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :load_mxit_user, :send_stats
+  before_filter :load_mxit_user, :load_facebook_user, :send_stats
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, :alert => exception.message
@@ -50,14 +50,14 @@ class ApplicationController < ActionController::Base
         profile = MxitProfile.new(request.env["HTTP_X_MXIT_PROFILE"])
         g.utmul = profile.language
         g.set_custom_var(1, 'Gender', profile.gender, 1)
-        g.set_custom_var(2, 'Age', profile.age.to_s, 1)
+        g.set_custom_var(1, 'Age', profile.age.to_s, 1)
       end
       if request.env["HTTP_X_MXIT_LOCATION"]
         location = MxitLocation.new(request.env["HTTP_X_MXIT_LOCATION"])
-        g.set_custom_var(3, 'Country', location.country_name, 1)
-        g.set_custom_var(4, 'Province', location.principal_subdivision_name, 1)
+        g.set_custom_var(1, 'Country', location.country_name, 1)
+        g.set_custom_var(1, 'Province', location.principal_subdivision_name, 1)
       end
-      g.set_custom_var(5, 'Provider', current_user.provider, 1)
+      g.set_custom_var(1, 'Provider', current_user.provider, 1)
       current_user.update_attribute(:utma,g.cookie_params(current_user.id)) unless current_user.utma?
       g.identify_user(current_user.utma) if current_user.utma?
       g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath,current_user.id)
@@ -73,6 +73,20 @@ class ApplicationController < ActionController::Base
       @current_user = User.find_or_create_from_auth_hash(provider: 'mxit',
                                                               uid: request.env['HTTP_X_MXIT_USERID_R'],
                                                              info: { name: request.env['HTTP_X_MXIT_NICK']})
+    end
+  end
+
+  def load_facebook_user
+    if params[:signed_request]
+      encoded_sig, payload = params[:signed_request].split('.')
+      encoded_str = payload.gsub('-','+').gsub('_','/')
+      encoded_str += '=' while !(encoded_str.size % 4).zero?
+      @data = ActiveSupport::JSON.decode(Base64.decode64(encoded_str))
+      if @data.kind_of?(Hash) && @data['user_id']
+        self.current_user = User.find_or_create_from_auth_hash(provider: 'facebook_canvas',
+                                                                    uid: @data['user_id'],
+                                                                  info: { name: "user #{@data['user_id']}"})
+      end
     end
   end
 
