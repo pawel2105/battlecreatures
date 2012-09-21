@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :load_mxit_user, :load_facebook_user, :send_stats
+  before_filter :load_mxit_user, :load_facebook_user
+  after_filter :send_stats
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, :alert => exception.message
@@ -77,7 +78,7 @@ class ApplicationController < ActionController::Base
   end
 
   def load_facebook_user
-    if params[:signed_request]
+    if ENV['FB_APP_ID'] && params[:signed_request]
       encoded_sig, payload = params[:signed_request].split('.')
       encoded_str = payload.gsub('-','+').gsub('_','/')
       encoded_str += '=' while !(encoded_str.size % 4).zero?
@@ -86,6 +87,9 @@ class ApplicationController < ActionController::Base
         self.current_user = User.find_or_create_from_auth_hash(provider: 'facebook_canvas',
                                                                     uid: @data['user_id'],
                                                                   info: { name: "user #{@data['user_id']}"})
+      else
+        redirect_to "https://www.facebook.com/dialog/oauth?client_id=#{ENV['FB_APP_ID']}{&redirect_uri=#{ENV['FB_CANVAS_PAGE']}"
+        false
       end
     end
   end
