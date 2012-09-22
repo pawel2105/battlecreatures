@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def calculate_yearly_rating
-    games.this_year.top(960).inject(0){|sum,game| sum += game.score.to_i }
+    games.this_year.top(160).inject(0){|sum,game| sum += game.score.to_i }
   end
 
   def update_ratings

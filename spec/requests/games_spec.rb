@@ -4,7 +4,8 @@ describe 'Starting a new practice game' do
 
   it "must allow you to start a new practice game and win" do
     add_headers('X_MXIT_USERID_R' => 'm2604100')
-    create(:word,value: "better")
+    Dictionary.clear
+    Dictionary.add("better")
     visit '/'
     click_link('new_game')
     click_button 'start_game'
@@ -26,7 +27,8 @@ describe 'Starting a new practice game' do
 
   it "must allow you to start a new practice game and lose" do
     add_headers('X_MXIT_USERID_R' => 'm2604100')
-    create(:word,value: "tester")
+    Dictionary.clear
+    Dictionary.add("tester")
     visit '/'
     click_link('new_game')
     click_button 'start_game'

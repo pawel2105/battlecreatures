@@ -19,7 +19,7 @@ class Game < ActiveRecord::Base
   scope :top, lambda{ |amount| order('score DESC').limit(amount) }
 
   def select_random_word
-    self.word = Word.random_value
+    self.word = Dictionary.random_value
   end
 
   def add_choice(letter)

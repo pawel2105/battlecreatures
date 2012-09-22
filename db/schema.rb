@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920153504) do
+ActiveRecord::Schema.define(:version => 20120922141140) do
 
   create_table "games", :force => true do |t|
     t.string   "word"
@@ -43,13 +43,5 @@ ActiveRecord::Schema.define(:version => 20120920153504) do
   add_index "users", ["uid", "provider"], :name => "index_users_on_uid_and_provider"
   add_index "users", ["weekly_rating"], :name => "index_users_on_weekly_rating"
   add_index "users", ["yearly_rating"], :name => "index_users_on_yearly_rating"
-
-  create_table "words", :force => true do |t|
-    t.string   "value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "words", ["value"], :name => "index_words_on_value", :unique => true
 
 end

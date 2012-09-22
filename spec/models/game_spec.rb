@@ -13,7 +13,7 @@ describe Game do
   end
 
   it "must generate a word" do
-    Word.should_receive(:random_value).and_return('wood')
+    Dictionary.should_receive(:random_value).and_return('wood')
     game = Game.new
     game.select_random_word
     game.word.should == "wood"

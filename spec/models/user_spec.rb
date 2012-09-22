@@ -83,8 +83,8 @@ describe User do
 
     it "must use 960 games in the last month" do
       user = create(:user)
-      create_list(:won_game, 961,  score: 1, user: user)
-      user.calculate_yearly_rating.should == 960
+      create_list(:won_game, 161,  score: 1, user: user)
+      user.calculate_yearly_rating.should == 160
     end
 
     it "must use games only from this year" do
@@ -98,9 +98,9 @@ describe User do
 
     it "must use top scoring games in the last year" do
       user = create(:user)
-      create_list(:won_game, 960,  score: 1, user: user)
+      create_list(:won_game, 160,  score: 1, user: user)
       create(:won_game, score: 41, user: user)
-      user.calculate_yearly_rating.should == 1000
+      user.calculate_yearly_rating.should == 200
     end
 
   end
