@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Dictionary do
 
+  before :each do
+    Dictionary.clear
+  end
+
   context "adding words" do
 
     it "must have a value" do

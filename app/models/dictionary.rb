@@ -37,7 +37,7 @@ class Dictionary < SortedSet
   private
 
   def valid_value?(value)
-    value.present? && (value.downcase! || true) && value.size >= 4 && value =~ /^\p{Lower}*$/
+    value.present? && (value.downcase! || true) && (value.gsub!(/\s/,"") || true) && value.size >= 4 && value =~ /^\p{Lower}*$/
   end
 
 end
