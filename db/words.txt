@@ -1433,4 +1433,158 @@ zephyr
 zinc
 zipper
 zoo
-
+Actor	 Garden	 Oil
+Advertisement	 Gas	 Orange
+Afternoon	 Ghost	 Oxygen
+Airport	 Girl	 Oyster
+Ambulance	 Glass	 Painting
+Animal	 Gold	 Parrot
+Answer	 Grass	 Pencil
+Apple	 Greece	 Piano
+Army	 Guitar	 Pillow
+Australia	 Hair	 Pizza
+Balloon	 Hamburger	 Planet
+Banana	 Helicopter	 Plastic
+Battery	 Helmet	 Portugal
+Beach	 Holiday	 Potato
+Beard	 Honey	 Queen
+Bed	 Horse	 Quill
+Belgium	 Hospital	 Rain
+Boy	 House	 Rainbow
+Branch	 Hydrogen	 Raincoat
+Breakfast	 Ice	 Refrigerator
+Brother	 Insect	 Restaurant
+Camera	 Insurance	 River
+Candle	 Iron	 Rocket
+Car	 Island	 Room
+Caravan	 Jackal	 Rose
+Carpet	 Jelly	 Russia
+Cartoon	 Jewellery	 Sandwich
+China	 Jordan	 School
+Church	 Juice	 Scooter
+Crayon	 Kangaroo	 Shampoo
+Crowd	 King	 Shoe
+Daughter	 Kitchen	 Soccer
+Death	 Kite	 Spoon
+Denmark	 Knife	 Stone
+Diamond	 Lamp	 Sugar
+Dinner	 Lawyer	 Sweden
+Disease	 Leather	 Teacher
+Doctor	 Library	 Telephone
+Dog	 Lighter	 Television
+Dream	 Lion	 Tent
+Dress	 Lizard	 Thailand
+Easter	 Lock	 Tomato
+Egg	 London	 Toothbrush
+Eggplant	 Lunch	 Traffic
+Egypt	 Machine	 Train
+Elephant	 Magazine	 Truck
+Energy	 Magician	 Uganda
+Engine	 Manchester	 Umbrella
+England	 Market	 Van
+Evening	 Match	 Vase
+Eye	 Microphone	 Vegetable
+Family	 Monkey	 Vulture
+Finland	 Morning	 Wall
+Fish	 Motorcycle	 Whale
+Flag	 Nail	 Window
+Flower	 Napkin	 Wire
+Football	 Needle	 Xylophone
+Forest	 Nest	 Yacht
+Fountain	 Nigeria	 Yak
+France	 Night	 Zebra
+Furniture	 Notebook	 Zoo
+Garage	 Ocean
+apple
+bed
+box
+car
+Christmas
+dog
+eye
+fire
+garden
+hand
+house
+men
+name
+picture
+robin
+shoe
+stick
+time
+water
+baby
+bell
+boy
+cat
+coat
+doll
+farm
+fish
+girl
+head
+kitty
+milk
+nest
+pig
+sister
+street
+top
+way
+back
+bird
+bread
+chair
+corn
+door
+farmer
+floor
+hill
+leg
+money
+night
+rabbit
+school
+snow
+sun
+toy
+wind
+ball
+birthday
+brother
+chicken
+cow
+duck
+father
+flower
+grass
+home
+letter
+morning
+paper
+rain
+seed
+song
+table
+tree
+window
+bear
+boat
+cake
+children
+day
+egg
+feet
+game
+ground
+horse
+man
+mother
+party
+ring
+sheep
+squirrel
+thing
+watch
+wood
