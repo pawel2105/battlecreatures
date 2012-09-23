@@ -2,7 +2,7 @@
 
 <ul>
   <%= content_tag_for(:li, @users) do |user| %>
-    <%=  user.name.html_safe %> - <%= params[:order] == 'top_week' ? user.weekly_rating : user.monthly_rating  %>
+    <%=  CGI::unescape(user.name).html_safe %> - <%= params[:order] == 'top_week' ? user.weekly_rating : user.monthly_rating  %>
   <% end %>
 </ul>
 
