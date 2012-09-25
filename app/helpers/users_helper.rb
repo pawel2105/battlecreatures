@@ -11,7 +11,7 @@ module UsersHelper
       "<i>#{text.gsub("/","")}</i>"    # Italics Text
     end.gsub(/[^\\]_.+[^\\]_/) do |text|
       "<u>#{text.gsub("_","")}</u>"    # Underline Text
-    end.gsub(/(#[A-F0-9]{6})/,""). # remove color
+    end.gsub(/(#[a-fA-F0-9]{6})/,""). # remove color
       gsub(/[^\\]\$.+[^\\]\$/) do |text|
       text.gsub("$","")               # remove $
     end.squish

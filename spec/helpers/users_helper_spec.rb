@@ -38,7 +38,7 @@ describe UsersHelper do
     end
 
     it "must remove color" do
-      mxit_markup("grant #FF1493gavin #7FFF00speelman").should == "grant gavin speelman"
+      mxit_markup("grant #FF1493gavin #7ffF00speelman").should == "grant gavin speelman"
     end
 
   end
