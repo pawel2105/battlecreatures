@@ -81,7 +81,7 @@ describe User do
 
   context "calculate_yearly_rating" do
 
-    it "must use 960 games in the last month" do
+    it "must use 160 games in the last month" do
       user = create(:user)
       create_list(:won_game, 161,  score: 1, user: user)
       user.calculate_yearly_rating.should == 160

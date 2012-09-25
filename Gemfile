@@ -9,7 +9,7 @@ gem 'cancan'
 gem 'omniauth'
 gem 'kaminari'
 gem 'gabba'
-# gem 'jquery-rails'
+gem 'nokogiri'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -33,4 +33,5 @@ group :test do
   gem 'simplecov-rcov', :require => false
   gem 'flog'
   gem "spork-rails"
+  gem 'webmock'
 end

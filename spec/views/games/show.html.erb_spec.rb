@@ -43,6 +43,13 @@ describe "games/show" do
     end
   end
 
+  it "must have link to the definition of the word when the game is done" do
+    @game.stub(:hangman_text).and_return("define")
+    @game.stub(:done?).and_return(true)
+    render
+    rendered.should have_link('define_word', href: define_word_path(word: 'define'))
+  end
+
   it "must have new game link if done" do
     @game.stub(:done?).and_return(true)
     render

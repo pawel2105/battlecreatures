@@ -37,6 +37,7 @@ Spork.prefork do
   Rails.application.railties.all { |r| r.eager_load! }
   require 'rspec/rails'
   require 'rspec/autorun'
+  require 'webmock/rspec'
 
   #case ENV["BROWSER"].to_s.downcase
   #  when 'firefox'
