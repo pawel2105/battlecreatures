@@ -1,5 +1,6 @@
 <h1>Defining: <%= params[:word] %></h1>
 <div style="color:green;"><%= @definition.split("\n").join("<br/>").html_safe %></div>
+<br/>
 
 <%= link_to 'home', root_path, id: 'root_page' %> |
 <%= link_to 'new', new_game_path, id: 'new_game' %> game |
