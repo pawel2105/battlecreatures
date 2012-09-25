@@ -51,14 +51,13 @@ class ApplicationController < ActionController::Base
         profile = MxitProfile.new(request.env["HTTP_X_MXIT_PROFILE"])
         g.utmul = profile.language
         g.set_custom_var(1, 'Gender', profile.gender, 1)
-        g.set_custom_var(1, 'Age', profile.age.to_s, 1)
+        g.set_custom_var(2, 'Age', profile.age.to_s, 1)
       end
       if request.env["HTTP_X_MXIT_LOCATION"]
         location = MxitLocation.new(request.env["HTTP_X_MXIT_LOCATION"])
-        g.set_custom_var(1, 'Country', location.country_name, 1)
-        g.set_custom_var(1, 'Province', location.principal_subdivision_name, 1)
+        g.set_custom_var(3, 'Location', "#{location.country_name},#{location.principal_subdivision_name}", 1)
       end
-      g.set_custom_var(1, 'Provider', current_user.provider, 1)
+      g.set_custom_var(5, 'Provider', current_user.provider, 1)
       current_user.update_attribute(:utma,g.cookie_params(current_user.id)) unless current_user.utma?
       g.identify_user(current_user.utma) if current_user.utma?
       g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath,current_user.id)
