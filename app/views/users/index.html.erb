@@ -6,7 +6,8 @@
 
 <ul>
   <%= content_tag_for(:li, @users) do |user| %>
-    <%= display_user_name(user.name).capitalize %>: <%= params[:order] == 'top_week' ? user.weekly_score : user.daily_score  %>
+    <%= display_user_name(user.name).capitalize %>:
+    <%= params[:order] == 'top_week' ? user.weekly_score : user.daily_score  %>
   <% end %>
 </ul>
 

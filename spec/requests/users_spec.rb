@@ -4,7 +4,6 @@ describe 'users' do
 
   before :each do
     @current_user = create(:user, uid: 'm2604100', name: "Pete", provider: 'mxit', daily_score: 21, weekly_score: 88)
-    @user = create(:user, uid: 'm2604102', name: "Sarah", provider: 'mxit', daily_score: 3, weekly_score: 84)
     add_headers('X_MXIT_USERID_R' => 'm2604100')
   end
 

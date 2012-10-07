@@ -3,13 +3,15 @@ class Battle < ActiveRecord::Base
   attr_accessible :choices, :opponent, :user_id
  
   after_create :select_random_opponent, :outcome
-  after_save :set_score, :update_user_score, :delete_old_battles
+  before_save :set_score
+  after_save :update_user_score, :delete_old_battles
 
   scope :this_week, lambda{ where('created_at > ?',Time.current.beginning_of_week) }
   scope :today, lambda{ where('created_at > ?',Time.current.beginning_of_day) }
 
   def select_random_opponent
     self.opponent = ["vampire","zombie","robot","ninja","pirate"].sample
+    self.update_attributes(opponent: self.opponent)
   end
 
   def outcome
