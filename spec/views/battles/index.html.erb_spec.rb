@@ -14,7 +14,12 @@ describe "battles/index" do
 
   it "should have the battle rules" do
     render
-    rendered.should have_css(".battle_rules")
+    rendered.should have_link("rules")
+  end
+
+  it "should have the battle rules" do
+    render
+    rendered.should have_link("learn")
   end
 
   it "should have a link to a new battle" do
