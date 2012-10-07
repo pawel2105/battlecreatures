@@ -1,7 +1,6 @@
-# used to store information about mxit profile
 class MxitProfile
 
-  attr_reader :language, :country, :dob, :gender, :tariff_plan
+  attr_reader :dob, :gender
 
   delegate :month, :day, to: :dob_date, prefix: true
   delegate :month, :day, to: :current_date, prefix: true

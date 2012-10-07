@@ -10,11 +10,9 @@ gem 'omniauth'
 gem 'kaminari'
 gem 'gabba'
 gem 'nokogiri'
+gem 'hirb'
 
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
-#  gem 'therubyracer'
   gem 'uglifier', '>= 1.0.3'
 end
 

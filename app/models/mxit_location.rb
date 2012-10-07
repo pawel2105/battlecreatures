@@ -1,4 +1,3 @@
-# store mxit locaiton information
 class MxitLocation
 
     attr_reader :country, :country_name, :principal_subdivision, :principal_subdivision_name, :city, :network_operator_id, :client_features_bitset, :cell_id

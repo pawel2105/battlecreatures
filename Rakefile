@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-HangmanLeague::Application.load_tasks
+BattleCreatures::Application.load_tasks

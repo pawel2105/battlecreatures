@@ -28,12 +28,12 @@ describe ApplicationController do
     context "has mxit headers" do
 
       before :each do
-        request.env['HTTP_X_MXIT_USERID_R'] = 'm2604100'
-        request.env['HTTP_X_MXIT_NICK'] = 'grant'
+        request.env['HTTP_X_MXIT_USERID_R'] = 'm1234567'
+        request.env['HTTP_X_MXIT_NICK'] = 'anonymous'
       end
 
-      it "loads the mxit user into current_user" do
-        User.should_receive(:find_or_create_from_auth_hash).with(uid: 'm2604100', provider: 'mxit', info: {name: 'grant'})
+      it "loads the mxit user as the current_user" do
+        User.should_receive(:find_or_create_from_auth_hash).with(uid: 'm1234567', provider: 'mxit', info: {name: 'anonymous'})
         get :index
       end
 
@@ -49,23 +49,6 @@ describe ApplicationController do
       User.should_not_receive(:find_or_create_from_auth_hash)
       get :index
       assigns(:current_user).should be_nil
-    end
-
-  end
-
-  describe "it attempts to load the facebook user" do
-
-    controller do
-      def index
-        render :text => "hello"
-      end
-    end
-
-    it "wont load mxit user if no userid" do
-      text = "vlXgu64BQGFSQrY0ZcJBZASMvYvTHu9GQ0YM9rjPSso.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsIjAiOiJwYXlsb2FkIn0"
-      User.should_not_receive(:find_or_create_from_auth_hash)
-      get :index, signed_request: text
-      assigns(:data).should == {"algorithm"=>"HMAC-SHA256", "0"=>"payload"}
     end
 
   end

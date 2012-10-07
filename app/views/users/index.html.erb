@@ -1,12 +1,16 @@
-<h1><%= params[:order].to_s.humanize %></h1>
+<% if params[:order] == "top_week" %>
+	<h1>Top players for the week</h1>
+<% else %>
+	<h1>Top players for today</h1>
+<% end %>
 
 <ul>
   <%= content_tag_for(:li, @users) do |user| %>
-    <%= display_user_name(user.name) %> - <%= params[:order] == 'top_week' ? user.weekly_rating : user.monthly_rating  %>
+    <%= display_user_name(user.name).capitalize %>: <%= params[:order] == 'top_week' ? user.weekly_score : user.daily_score  %>
   <% end %>
 </ul>
 
 <br/>
 
 <%= link_to 'home', root_path, id: 'root_page' %> |
-view <%= link_to 'rank', user_path(current_user), id: 'view_rank' %>
+view <%= link_to 'your scores', user_path(current_user), id: 'view_rank' %>

@@ -6,8 +6,8 @@ describe "users/index" do
   before(:each) do
     @users =
     assign(:users, [
-      stub_model(User, id: 100, name: "hello"),
-      stub_model(User, id: 101, name: "goodbye")
+      stub_model(User, id: 100, name: "Count dracula"),
+      stub_model(User, id: 101, name: "Zed")
     ])
     view.stub!(:paginate)
     view.stub!(:current_user).and_return(stub_model(User, id: 50))
@@ -16,16 +16,11 @@ describe "users/index" do
   it "renders a list of users" do
     render
     within("#user_100") do
-      rendered.should have_content("hello")
+      rendered.should have_content("Count dracula")
     end
     within("#user_101") do
-      rendered.should have_content("goodbye")
+      rendered.should have_content("Zed")
     end
-  end
-
-  it "should have a home page link" do
-    render
-    rendered.should have_link("root_page", href: '/')
   end
 
   it "should have a view rank link" do

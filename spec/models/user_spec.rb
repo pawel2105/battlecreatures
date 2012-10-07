@@ -18,129 +18,93 @@ describe User do
     User.new(uid: 'xx', provider: "zz").should have(0).errors_on(:uid)
   end
 
-  it "must return the amount of games" do
-    user = create(:user)
-    user.game_count.should == 0
-    create(:game, user: user)
-    user.game_count.should == 1
-    create_list(:game,5, user: user)
-    user.game_count.should == 6
+  it "must have a daily rating" do
+    User.new.should respond_to(:daily_score)
   end
 
-  context "calculate_weekly_rating" do
+  it "must have a week rating" do
+    User.new.should respond_to(:weekly_score)
+  end
 
-    it "must use 20 games in the last week" do
-      user = create(:user)
-      create_list(:won_game, 21,  score: 1, user: user)
-      user.calculate_weekly_rating.should == 20
-    end
+  it "must be able to have battles" do
+    User.new.should respond_to(:battles)
+  end
 
-    it "must use games only from this week" do
-      user = create(:user)
-      create(:won_game, score: 20, user: user)
-      Timecop.freeze(1.week.ago - 1.day) do
-        create(:won_game, score: 20, user: user)
-      end
-      user.calculate_weekly_rating.should == 20
-    end
+  context "calculate daily score" do
 
-    it "must use top scoring games in the last week" do
+    it "must have 20 battles in the last week" do
       user = create(:user)
-      create_list(:won_game, 20,  score: 1, user: user)
-      create(:won_game, score: 21, user: user)
-      user.calculate_weekly_rating.should == 40
+      create_list(:battle, 15, created_at: 2.hours.ago, score: 1, user: user)
+      create_list(:battle, 2, created_at: 2.hours.ago, score: -1, user: user)
+      create_list(:battle, 1, created_at: 25.hours.ago, score: 1, user: user)
+      user.calculate_daily_score.should == 13
     end
 
   end
 
-  context "calculate_monthly_rating" do
+  context "calculate weekly score" do
 
-    it "must use 80 games in the last month" do
-      user = create(:user)
-      create_list(:won_game, 81,  score: 1, user: user)
-      user.calculate_monthly_rating.should == 80
+    before :each do
+      @user = create(:user)
+      create_list(:battle, 20, score: 1, user: @user)
     end
 
-    it "must use games only from this month" do
-      user = create(:user)
-      create(:won_game, score: 20, user: user)
-      Timecop.freeze(1.month.ago - 1.day) do
-        create(:won_game, score: 20, user: user)
-      end
-      user.calculate_monthly_rating.should == 20
+    it "must have the right score for the last week" do
+      @user.calculate_weekly_score.should == 20
     end
 
-    it "must use top scoring games in the last week" do
-      user = create(:user)
-      create_list(:won_game, 80,  score: 1, user: user)
-      create(:won_game, score: 21, user: user)
-      user.calculate_monthly_rating.should == 100
+    it "must calculate scores only from battles within the last week" do
+      create(:battle, score: 20, created_at: 2.weeks.ago, user: @user)
+      @user.calculate_weekly_score.should == 20
     end
 
   end
 
-  context "calculate_yearly_rating" do
+  context "updating scores" do
 
-    it "must use 160 games in the last month" do
+    it "must accurately update the scores for a user" do
       user = create(:user)
-      create_list(:won_game, 161,  score: 1, user: user)
-      user.calculate_yearly_rating.should == 160
-    end
-
-    it "must use games only from this year" do
-      user = create(:user)
-      create(:won_game, score: 20, user: user)
-      Timecop.freeze(1.year.ago - 1.day) do
-        create(:won_game, score: 20, user: user)
-      end
-      user.calculate_yearly_rating.should == 20
-    end
-
-    it "must use top scoring games in the last year" do
-      user = create(:user)
-      create_list(:won_game, 160,  score: 1, user: user)
-      create(:won_game, score: 41, user: user)
-      user.calculate_yearly_rating.should == 200
+      create(:battle, score: 13, created_at: 2.weeks.ago, user: user) 
+      create(:battle, score: 9, created_at: 2.days.ago, user: user) 
+      create(:battle, score: 7, created_at: 2.minutes.ago, user: user)
+      user.update_scores
+      user.daily_score.should == 7
+      user.weekly_score.should == 16
     end
 
   end
 
-  context "calculate_score" do
+  context "rankings" do
 
-    it "must update the ratings" do
-      user = stub_model(User)
-      user.stub(:calculate_weekly_rating).and_return(20)
-      user.stub(:calculate_monthly_rating).and_return(80)
-      user.stub(:calculate_yearly_rating).and_return(960)
-      user.update_ratings
-      user.weekly_rating.should == 20
-      user.monthly_rating.should == 80
-      user.yearly_rating.should == 960
+    it "must be correct for the user" do
+      user = create(:user)
+      other_user = create(:user)
+      user.stub(:calculate_daily_score).and_return(20)
+      user.stub(:calculate_weekly_score).and_return(180)
+      other_user.stub(:calculate_daily_score).and_return(30)
+      other_user.stub(:calculate_weekly_score).and_return(90)
+      user.update_scores
+      other_user.update_scores
+      user.daily_rank.should == 2
+      user.weekly_rank.should == 1
     end
 
   end
 
-  context "rank" do
+  context "scores" do
+
+    it "should return correct daily rank" do
+      user1, user3, user2 = create(:user, daily_score: 20), create(:user, daily_score: 40), create(:user, daily_score: 30)
+      user1.daily_rank.should == 3
+      user3.daily_rank.should == 1
+      user2.daily_rank.should == 2
+    end
 
     it "should return correct weekly rank" do
-      user1, user3, user2 = create(:user, weekly_rating: 20), create(:user, weekly_rating: 40), create(:user, weekly_rating: 30)
+      user1, user3, user2 = create(:user, weekly_score: 20), create(:user, weekly_score: 40), create(:user, weekly_score: 30)
       user1.weekly_rank.should == 3
       user3.weekly_rank.should == 1
       user2.weekly_rank.should == 2
-    end
-
-    it "should return correct monthly rank" do
-      user1, user3, user2 = create(:user, monthly_rating: 20), create(:user, monthly_rating: 40), create(:user, monthly_rating: 30)
-      user1.monthly_rank.should == 3
-      user3.monthly_rank.should == 1
-      user2.monthly_rank.should == 2
-    end
-
-    it "should return correct yearly rank" do
-      user1, user3, user2 = create(:user, yearly_rating: 20), create(:user, yearly_rating: 40), create(:user, yearly_rating: 30)
-      user1.yearly_rank.should == 3
-      user3.yearly_rank.should == 1
-      user2.yearly_rank.should == 2
     end
 
   end
@@ -159,7 +123,7 @@ describe User do
     it "must return existing user if uid and provider match exists" do
       user_id = create(:user, uid: "u1", provider: "p", name: "Pawel").id
       expect {
-        user = User.find_or_create_from_auth_hash(uid: "u1", provider: "p", info: {name: "Grant"})
+        user = User.find_or_create_from_auth_hash(uid: "u1", provider: "p", info: {name: "Pawel"})
         user.uid.should == 'u1'
         user.provider.should == 'p'
         user.id == user_id

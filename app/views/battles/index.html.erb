@@ -1,0 +1,9 @@
+<p class="welcome_message">
+	<b>Welcome to the world of battle creatures.</b>
+</p>
+
+1. <%= link_to 'Battle', new_battle_path, id: 'new_battle' %> <br />
+2. Read the <%= link_to 'rules', rules_path, id: 'rules' %> <br />
+3. View your <%= link_to 'rank', user_path(current_user), id: 'view_rank' %> <br />
+4. <%= link_to 'Learn', explanation_path, id: 'learn' %> about the battle creatures
+

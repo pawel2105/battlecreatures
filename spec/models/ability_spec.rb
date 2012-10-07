@@ -9,34 +9,34 @@ describe Ability do
     @ability = Ability.new(@user)
   end
 
-  context "Games" do
+  context "Battles" do
 
-    it "must be able to view games" do
-      @ability.should be_able_to(:read, Game)
+    it "must be able to view battles" do
+      @ability.should be_able_to(:read, Battle)
     end
 
-    it "wont be able to read other users games" do
-      game = create(:game, user: create(:user))
-      @ability.should_not be_able_to(:read, game)
+    # it "wont be able to read other users battles" do
+    #   battle = create(:battle, user: create(:user))
+    #   @ability.should_not be_able_to(:read, battle)
+    # end
+
+    it "must be able to read own users battles" do
+      battle = create(:battle, user: @user)
+      @ability.should be_able_to(:read, battle)
     end
 
-    it "must be able to read own users games" do
-      game = create(:game, user: @user)
-      @ability.should be_able_to(:read, game)
+    it "must be able to create battles" do
+      @ability.should be_able_to(:create, Battle)
     end
 
-    it "must be able to create games" do
-      @ability.should be_able_to(:create, Game)
-    end
+    # it "wont be able to play letters on other users battles" do
+    #   battle = create(:battle, user: create(:user))
+    #   @ability.should_not be_able_to(:enter_battle, battle)
+    # end
 
-    it "wont be able to play letters on other users games" do
-      game = create(:game, user: create(:user))
-      @ability.should_not be_able_to(:play_letter, game)
-    end
-
-    it "must be able to play letters on own users games" do
-      game = create(:game, user: @user)
-      @ability.should be_able_to(:play_letter, game)
+    it "must be able to play letters on own users battles" do
+      battle = create(:battle, user: @user)
+      @ability.should be_able_to(:enter_battle, battle)
     end
 
   end

@@ -1,13 +1,12 @@
 class User < ActiveRecord::Base
-  attr_accessible :name, :provider, :uid, :weekly_rating, :monthly_rating, :yearly_rating
-
-  has_many :games
+  attr_accessible :name, :provider, :uid, :daily_score, :weekly_score
+  has_many :battles
 
   validates :provider, :uid, presence: true
   validates_uniqueness_of :uid, :scope => :provider
 
-  scope :top_this_week, lambda{ |amount| order('weekly_rating DESC').limit(amount) }
-  scope :top_this_month, lambda{ |amount| order('monthly_rating DESC').limit(amount) }
+  scope :today, lambda{ |amount| order('daily_score DESC').limit(amount) }
+  scope :this_week, lambda{ |amount| order('weekly_score DESC').limit(amount) }
 
   def self.find_or_create_from_auth_hash(auth_hash)
     auth_hash.stringify_keys!
@@ -22,38 +21,26 @@ class User < ActiveRecord::Base
     return user
   end
 
-  def calculate_weekly_rating
-    games.this_week.top(20).inject(0){|sum,game| sum += game.score.to_i }
+  def calculate_daily_score
+    battles.all(conditions: ["DATE(created_at) = DATE(?)", Time.now]).inject(0){|sum,battle| sum += battle.score.to_i }
   end
 
-  def calculate_monthly_rating
-    games.this_month.top(80).inject(0){|sum,game| sum += game.score.to_i }
+  def calculate_weekly_score
+    battles.all(conditions: ["DATE(created_at) > DATE(?)", 7.days.ago]).inject(0){|sum,battle| sum += battle.score.to_i }
   end
 
-  def calculate_yearly_rating
-    games.this_year.top(160).inject(0){|sum,game| sum += game.score.to_i }
+  def update_scores
+    update_attributes(daily_score: calculate_daily_score, weekly_score: calculate_weekly_score)
   end
 
-  def update_ratings
-    update_attributes(weekly_rating: calculate_weekly_rating,
-                      monthly_rating: calculate_monthly_rating,
-                      yearly_rating: calculate_yearly_rating)
+  def daily_rank
+    @score = self.daily_score
+    User.where("daily_score > ?", @score).count + 1
   end
 
   def weekly_rank
-    User.where("weekly_rating > ?", weekly_rating).count + 1
-  end
-
-  def monthly_rank
-    User.where("monthly_rating > ?", monthly_rating).count + 1
-  end
-
-  def yearly_rank
-    User.where("yearly_rating > ?", yearly_rating).count + 1
-  end
-
-  def game_count
-    games.count
+    @score = self.weekly_score
+    User.where("weekly_score > ?", @score).count + 1
   end
 
 end
