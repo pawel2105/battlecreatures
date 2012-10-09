@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  attr_accessor :user_agent, :language, :gender, :age, :country, :area
   attr_accessible :name, :provider, :uid, :daily_score, :weekly_score
   has_many :battles
 
