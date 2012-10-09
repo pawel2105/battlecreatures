@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
           g.user_agent = current_user.user_agent || request.env['HTTP_USER_AGENT']
           g.utmul = current_user.language || "en"
           g.set_custom_var(1, 'Gender', current_user.gender || "unknown", 1)
-          g.set_custom_var(2, 'Age', current_user.age || "unknown", 1)
+          g.set_custom_var(2, 'Age', current_user.age.to_s || "unknown", 1)
           g.set_custom_var(3, current_user.country || "unknown Country", current_user.area || "unknown", 1)
           g.set_custom_var(5, 'Provider', current_user.provider, 1)
           current_user.update_attribute(:utma, g.cookie_params(current_user.id)) unless current_user.utma?
@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
                                                              info: { name: request.env['HTTP_X_MXIT_NICK']})
       if request.env["HTTP_X_MXIT_PROFILE"]
         @mxit_profile = MxitProfile.new(request.env["HTTP_X_MXIT_PROFILE"])
-        current_user.age, current_user.gender = @mxit_profile.age, @mxit_profile.gender
+        current_user.age, current_user.gender = @mxit_profile.age.to_s, @mxit_profile.gender
       end
       if request.env['HTTP_X_DEVICE_USER_AGENT']
         current_user.user_agent = "Mxit #{request.env['HTTP_X_DEVICE_USER_AGENT']}"
