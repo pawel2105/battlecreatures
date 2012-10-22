@@ -1,6 +1,7 @@
 module UsersHelper
 
   def display_user_name(name)
+    return "" if name.blank?
     mxit_markup(CGI::unescape(name))
   end
 
