@@ -32,7 +32,7 @@ describe User do
 
   context "calculate daily score" do
 
-    it "must have 20 battles in the last week" do
+    it "must have 20 battles in the last 3 days" do
       user = create(:user)
       create_list(:battle, 15, created_at: 2.hours.ago, score: 1, user: user)
       create_list(:battle, 2, created_at: 2.hours.ago, score: -1, user: user)

@@ -1,10 +1,10 @@
 Your rank for the day: <%= @user.weekly_rank.ordinalize %>
 <br/>
-Your rank for the week: <%= @user.daily_rank.ordinalize %>
+Your rank for the last 3 days: <%= @user.daily_rank.ordinalize %>
 <br/><br/>
 Your score for today: <%= @user.daily_score %>
 <br/>
-Your score for the week: <%= @user.weekly_score %>
+Your score for the last 3 days: <%= @user.weekly_score %>
 <br /><br />
 <%= link_to 'home', root_path, id: 'root_page' %> |
 Top players for this <%= link_to 'week', users_path(order: 'top_week'), id: 'view_top_week_users' %> |

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'users' do
 
   before :each do
-    @current_user = create(:user, uid: 'm2604100', name: "Pete", provider: 'mxit', daily_score: 21, weekly_score: 88)
+    @current_user = User.create(uid: 'm2604100', name: "Pete", provider: 'mxit', daily_score: 21, weekly_score: 88)
     add_headers('X_MXIT_USERID_R' => 'm2604100')
   end
 
@@ -11,9 +11,9 @@ describe 'users' do
     visit '/'
     click_link('view_rank')
     page.should have_content("Your rank for the day: 1st")
-    page.should have_content("Your rank for the week: 1st")
+    page.should have_content("Your rank for the last 3 days: 1st")
     page.should have_content("Your score for today: 21")
-    page.should have_content("Your score for the week: 88")
+    page.should have_content("Your score for the last 3 days: 88")
     page.should have_link("view_top_day_users")
     page.should have_link("view_top_week_users")
   end

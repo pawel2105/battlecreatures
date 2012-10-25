@@ -76,7 +76,7 @@ class Battle < ActiveRecord::Base
   end
 
   def delete_old_battles
-    user.battles.where(["created_at < ?", 8.days.ago]).each { |b| b.delete }
+    user.battles.where(["created_at < ?", 3.days.ago]).each { |b| b.delete }
   end
 
 end
