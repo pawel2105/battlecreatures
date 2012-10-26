@@ -11,9 +11,9 @@ describe 'users' do
     visit '/'
     click_link('view_rank')
     page.should have_content("Your rank for the day: 1st")
-    page.should have_content("Your rank for the last 3 days: 1st")
+    page.should have_content("Your rank for the last 2 days: 1st")
     page.should have_content("Your score for today: 21")
-    page.should have_content("Your score for the last 3 days: 88")
+    page.should have_content("Your score for the last 2 days: 88")
     page.should have_link("view_top_day_users")
     page.should have_link("view_top_week_users")
   end

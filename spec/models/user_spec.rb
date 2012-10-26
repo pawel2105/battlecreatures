@@ -32,7 +32,7 @@ describe User do
 
   context "calculate daily score" do
 
-    it "must have 20 battles in the last 3 days" do
+    it "must have 20 battles in the last 2 days" do
       user = create(:user)
       create_list(:battle, 15, created_at: 2.hours.ago, score: 1, user: user)
       create_list(:battle, 2, created_at: 2.hours.ago, score: -1, user: user)
@@ -65,7 +65,7 @@ describe User do
     it "must accurately update the scores for a user" do
       user = create(:user)
       create(:battle, score: 13, created_at: 2.weeks.ago, user: user) 
-      create(:battle, score: 9, created_at: 2.days.ago, user: user) 
+      create(:battle, score: 9, created_at: 33.hours.ago, user: user) 
       create(:battle, score: 7, created_at: 2.minutes.ago, user: user)
       user.update_scores
       user.daily_score.should == 7

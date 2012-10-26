@@ -151,7 +151,7 @@ describe Battle do
 
   context "deleting old battles" do
 
-    it "must remove a user's battles if they're older than 8 days" do
+    it "must remove a user's battles if they're older than 2 days" do
       long_ago = 1.year.ago
       create(:battle, created_at: long_ago)
 
@@ -161,7 +161,7 @@ describe Battle do
     end
 
     it "doesn't remove a user's recent battles" do
-      not_long_ago = 2.days.ago
+      not_long_ago = 25.hours.ago
       create(:battle, created_at: not_long_ago)
 
       Timecop.freeze(not_long_ago) do

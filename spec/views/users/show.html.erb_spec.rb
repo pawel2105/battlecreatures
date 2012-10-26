@@ -13,8 +13,8 @@ describe "users/show.html.erb" do
     render
     rendered.should have_content("Your rank for the day: 1st")
     rendered.should have_content("Your score for today: 960")
-    rendered.should have_content("Your rank for the last 3 days: 3rd")
-    rendered.should have_content("Your score for the last 3 days: 20")
+    rendered.should have_content("Your rank for the last 2 days: 3rd")
+    rendered.should have_content("Your score for the last 2 days: 20")
   end
 
   it "should have a home page link" do
