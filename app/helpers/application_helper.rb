@@ -44,6 +44,10 @@ module ApplicationHelper
     ENV['SHINKA_AUID']
   end
 
+  def request_ip_address
+    env["HTTP_X_FORWARDED_FOR"]
+  end
+
   def env
     request.env
   end
