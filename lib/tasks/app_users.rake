@@ -10,7 +10,7 @@ namespace :app do
     end
 
     desc "Purge inactive users"
-    task :purge_battles => :environment do
+    task :purge_users => :environment do
     	@initial_users = User.count
       User.where(["updated_at < ?", 1441.minutes.ago]).each { |b| b.delete }
       @users_left = User.count - @initial_users
