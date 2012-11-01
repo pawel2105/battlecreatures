@@ -161,7 +161,7 @@ describe Battle do
     end
 
     it "doesn't remove a user's recent battles" do
-      not_long_ago = 25.hours.ago
+      not_long_ago = 23.hours.ago
       create(:battle, created_at: not_long_ago)
 
       Timecop.freeze(not_long_ago) do

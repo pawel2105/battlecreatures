@@ -69,7 +69,6 @@ describe User do
       create(:battle, score: 7, created_at: 2.minutes.ago, user: user)
       user.update_scores
       user.daily_score.should == 7
-      user.weekly_score.should == 16
     end
 
   end

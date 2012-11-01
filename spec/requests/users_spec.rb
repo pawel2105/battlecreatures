@@ -11,11 +11,8 @@ describe 'users' do
     visit '/'
     click_link('view_rank')
     page.should have_content("Your rank for the day: 1st")
-    page.should have_content("Your rank for the last 2 days: 1st")
     page.should have_content("Your score for today: 21")
-    page.should have_content("Your score for the last 2 days: 88")
     page.should have_link("view_top_day_users")
-    page.should have_link("view_top_week_users")
   end
 
   it "must show top users for the day" do
@@ -24,16 +21,6 @@ describe 'users' do
     click_link('view_top_day_users')
     page.should have_content("Pete - 21")
     page.should have_content("Sarah - 3")
-    page.should have_link("view_rank")
-    page.should have_link("root_page")
-  end
-
-  it "must show top users for the week" do
-    visit '/'
-    click_link('view_rank')
-    click_link('view_top_week_users')
-    page.should have_content("Pete - 88")
-    page.should have_content("Sarah - 84")
     page.should have_link("view_rank")
     page.should have_link("root_page")
   end
