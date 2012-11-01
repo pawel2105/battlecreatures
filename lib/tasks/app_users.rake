@@ -5,7 +5,7 @@ namespace :app do
     task :purge_battles => :environment do
       @initial_battles = Battle.count
       Battle.where(["created_at < ?", 1441.minutes.ago]).each { |b| b.delete }
-      @battles_removed = Battle.count - @initial_battles
+      @battles_removed = @initial_battles - Battle.count
       puts "#{@battles_removed} old battles have been removed"
     end
 
@@ -13,7 +13,7 @@ namespace :app do
     task :purge_users => :environment do
     	@initial_users = User.count
       User.where(["updated_at < ?", 1441.minutes.ago]).each { |b| b.delete }
-      @users_removed = User.count - @initial_users
+      @users_removed = @initial_users - User.count
       puts "#{@users_removed} old users have been removed"
     end
   end
