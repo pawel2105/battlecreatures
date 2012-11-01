@@ -1,13 +1,9 @@
-<% if params[:order] == "top_week" %>
-	<h1>Top players for the last 2 days</h1>
-<% else %>
-	<h1>Top players for today</h1>
-<% end %>
+<h1>Today's top players:</h1>
 
 <ul>
   <%= content_tag_for(:li, @users) do |user| %>
     <%= display_user_name(user.name) %>:
-    <%= params[:order] == 'top_week' ? user.weekly_score : user.daily_score  %>
+    <%= user.daily_score  %>
   <% end %>
 </ul>
 

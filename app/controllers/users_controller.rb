@@ -3,11 +3,7 @@ class UsersController < ApplicationController
 
   def index
     case params[:order]
-      when 'top_week'
-        @users = User.this_week(10)
-      else
-        @users = User.today(10)
-    end
+      @users = User.today(10)
   end
 
   def show
