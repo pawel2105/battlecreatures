@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'users' do
 
   before :each do
-    @current_user = User.create!(uid: 'm2604100', name: "Pete", provider: 'mxit', daily_score: 21, weekly_score: 88)
+    @current_user = User.create(uid: 'm2604100', name: "Pete", provider: 'mxit', daily_score: 21, weekly_score: 88)
     add_headers('X_MXIT_USERID_R' => 'm2604100')
   end
 
