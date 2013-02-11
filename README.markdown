@@ -31,3 +31,8 @@ There is a helper method called `mxit_markup()` that is used to escape strange m
 There's also a helper method for Shinka advertising that you can insert into the game. You will need to sign up with Shinka and add your ID to the environment as `ENV['SHINKA_AUID']`
 
 All clever things were done by www.github.com/grantspeelman and all the horrible things were done by me.
+
+License
+=======
+
+Do what you want with this, for free or for profit. MIT license.
